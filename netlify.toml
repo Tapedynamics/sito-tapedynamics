@@ -1,7 +1,8 @@
 [build]
   functions = "netlify/functions/"
 
-[functions]
+# Imposta il timeout specificamente per la funzione 'gemini'
+[functions.gemini]
   timeout = 26
 
 [[redirects]]
