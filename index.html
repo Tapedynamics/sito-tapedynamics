@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TapeDynamics - AI per PMI</title>
+    <title>TapeDynamics - Consulenza, Formazione e Soluzioni AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,16 +11,30 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* light gray background */
         }
-        .hero-gradient {
-            background: radial-gradient(circle at 50% 0%, rgba(19,78,74,0.1), rgba(255,255,255,0) 40%);
+        /* Stile per le pagine nascoste */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .nav-link-active {
+            color: #0d9488; /* Teal-700 */
+            font-weight: 600;
         }
         .loader {
             border: 4px solid #f3f3f3;
             border-radius: 50%;
-            border-top: 4px solid #14b8a6; /* Teal color */
-            width: 40px;
-            height: 40px;
+            border-top: 4px solid #0d9488;
+            width: 30px;
+            height: 30px;
             animation: spin 1s linear infinite;
         }
         @keyframes spin {
@@ -29,262 +43,484 @@
         }
     </style>
 </head>
-<body class="bg-white text-gray-800">
+<body class="text-gray-800 flex flex-col min-h-screen">
 
     <!-- Header -->
-    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-teal-800">
-                Tape<span class="font-light">Dynamics</span>
+            <a href="#home" class="nav-link text-2xl font-bold text-gray-900">
+                Tape<span class="font-light text-teal-600">Dynamics</span>
             </a>
-            <nav class="hidden md:flex items-center space-x-8">
-                <a href="#vantaggi" class="text-gray-600 hover:text-teal-700 transition-colors">Vantaggi</a>
-                <a href="#servizi" class="text-gray-600 hover:text-teal-700 transition-colors">Servizi</a>
-                <a href="#gemini-demo" class="text-gray-600 hover:text-teal-700 transition-colors">Demo AI</a>
-                <a href="#contatti" class="bg-teal-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-teal-700 transition-all">Consulenza Gratuita</a>
+            <nav class="hidden lg:flex items-center space-x-6">
+                <a href="#home" class="nav-link-item text-gray-600 hover:text-teal-600 transition-colors">Home</a>
+                <a href="#formazione-trading" class="nav-link-item text-gray-600 hover:text-teal-600 transition-colors">Formazione Trading</a>
+                <a href="#gestione-finanziaria" class="nav-link-item text-gray-600 hover:text-teal-600 transition-colors">Gestione Finanziaria</a>
+                <a href="#strumenti-ai" class="nav-link-item text-gray-600 hover:text-teal-600 transition-colors">Strumenti AI</a>
+                <a href="#chi-siamo" class="nav-link-item text-gray-600 hover:text-teal-600 transition-colors">Chi Siamo</a>
+                <a href="#contatti" class="nav-link-item bg-teal-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-teal-700 transition-all">Contatti</a>
             </nav>
-            <button id="mobile-menu-button" class="md:hidden text-gray-700">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            <button id="mobile-menu-button" class="lg:hidden text-gray-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
-            <a href="#vantaggi" class="block py-2 text-gray-600 hover:text-teal-700">Vantaggi</a>
-            <a href="#servizi" class="block py-2 text-gray-600 hover:text-teal-700">Servizi</a>
-            <a href="#gemini-demo" class="block py-2 text-gray-600 hover:text-teal-700">Demo AI</a>
-            <a href="#contatti" class="block mt-2 text-center bg-teal-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-teal-700">Consulenza Gratuita</a>
+        <div id="mobile-menu" class="hidden lg:hidden">
+            <div class="px-6 pb-4 space-y-2">
+                <a href="#home" class="nav-link-item block py-2 text-gray-600 hover:text-teal-600">Home</a>
+                <a href="#formazione-trading" class="nav-link-item block py-2 text-gray-600 hover:text-teal-600">Formazione Trading</a>
+                <a href="#gestione-finanziaria" class="nav-link-item block py-2 text-gray-600 hover:text-teal-600">Gestione Finanziaria</a>
+                <a href="#strumenti-ai" class="nav-link-item block py-2 text-gray-600 hover:text-teal-600">Strumenti AI</a>
+                <a href="#chi-siamo" class="nav-link-item block py-2 text-gray-600 hover:text-teal-600">Chi Siamo</a>
+                <a href="#contatti" class="nav-link-item block mt-2 text-center bg-teal-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-teal-700">Contatti</a>
+            </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
-        <section class="relative text-center py-20 md:py-32 px-6 hero-gradient">
-            <div class="container mx-auto">
-                <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
-                    Potenzia la tua PMI con 
-                    <span class="text-teal-700">l'Intelligenza Artificiale</span>
-                </h1>
-                <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-                    Scopri come l'AI può automatizzare i processi, aumentare l'efficienza e far crescere il tuo business. Ti guiderò passo dopo passo nell'integrazione delle migliori soluzioni per i tuoi obiettivi.
-                </p>
-                <div class="mt-10">
-                    <a href="#contatti" class="bg-teal-600 text-white px-6 py-3 text-base md:px-8 md:py-4 md:text-lg rounded-lg font-semibold shadow-lg hover:bg-teal-700 transform hover:scale-105 transition-all inline-block">
-                        Richiedi una Consulenza Gratuita
-                    </a>
+    <!-- Contenitore delle Pagine -->
+    <main class="flex-grow">
+
+        <!-- PAGINA HOME -->
+        <div id="home" class="page">
+            <section class="bg-white">
+                <div class="container mx-auto px-6 py-20 md:py-32 text-center">
+                    <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+                        Precisione, Strategia, Innovazione.
+                    </h1>
+                    <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                        TapeDynamics è il partner strategico per trader, privati e PMI che puntano all'eccellenza. Offriamo formazione, gestione finanziaria e soluzioni AI su misura.
+                    </p>
+                    <div class="mt-10">
+                        <a href="#contatti" class="nav-link bg-teal-600 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:bg-teal-700 transform hover:scale-105 transition-all inline-block">
+                            Fissa una Consulenza Gratuita
+                        </a>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="py-20">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Le Nostre Aree di Attività</h2>
+                        <p class="mt-4 text-lg text-gray-600">Tre pilastri per la tua crescita.</p>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <!-- Card 1 -->
+                        <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow border flex flex-col">
+                            <h3 class="text-2xl font-semibold text-gray-900 mb-3">Formazione Trading</h3>
+                            <p class="text-gray-600 flex-grow mb-6">Un metodo basato sulla precisione dei concetti ICT per operare con profitto sui futures americani.</p>
+                            <a href="#formazione-trading" class="nav-link text-teal-600 font-semibold mt-auto hover:text-teal-800">Scopri il metodo &rarr;</a>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow border flex flex-col">
+                            <h3 class="text-2xl font-semibold text-gray-900 mb-3">Gestione Finanziaria</h3>
+                            <p class="text-gray-600 flex-grow mb-6">Pianificazione su misura per privati e PMI. Ottimizziamo le risorse e creiamo piani di investimento consapevoli.</p>
+                            <a href="#gestione-finanziaria" class="nav-link text-teal-600 font-semibold mt-auto hover:text-teal-800">Ottimizza le tue finanze &rarr;</a>
+                        </div>
+                        <!-- Card 3 -->
+                        <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow border flex flex-col">
+                            <h3 class="text-2xl font-semibold text-gray-900 mb-3">Strumenti AI per PMI</h3>
+                            <p class="text-gray-600 flex-grow mb-6">Sviluppiamo soluzioni digitali e automazioni intelligenti per rendere la tua impresa più efficiente e competitiva.</p>
+                            <a href="#strumenti-ai" class="nav-link text-teal-600 font-semibold mt-auto hover:text-teal-800">Innova il tuo business &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGINA FORMAZIONE TRADING -->
+        <div id="formazione-trading" class="page bg-white">
+            <div class="container mx-auto px-6 py-20">
+                <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-4">Formazione Trading d'Elite</h1>
+                <p class="text-xl text-gray-600 mb-12 max-w-4xl">Basta con l'analisi tecnica discrezionale. Il nostro metodo si fonda sulla precisione algoritmica dei concetti ICT per interpretare le reali intenzioni del mercato.</p>
+                
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-8">
+                        <div>
+                            <h2 class="text-2xl font-semibold mb-3">Cosa Imparerai</h2>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">&#10003;</span><span><strong>Precisione Assoluta:</strong> Identificare e operare su setup ad alta probabilità come i Propulsion Block.</span></li>
+                                <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">&#10003;</span><span><strong>Gestione del Rischio Professionale:</strong> Tecniche per proteggere il capitale e massimizzare i profitti.</span></li>
+                                <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">&#10003;</span><span><strong>Il Diario di Trading:</strong> Uno strumento fondamentale per analizzare le performance e migliorare costantemente.</span></li>
+                                <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">&#10003;</span><span><strong>Operatività Reale:</strong> Sessioni di live trading per applicare i concetti in tempo reale sui futures americani (S&P 500, Nasdaq).</span></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-semibold mb-3">Come Accedere</h2>
+                            <p class="text-gray-700">Offriamo percorsi personalizzati in base al tuo livello di esperienza, attraverso consulenze one-to-one, corsi online on-demand e sessioni di affiancamento live.</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-100 p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-center mb-6">Pronto a Cambiare Approccio?</h3>
+                        <p class="text-center text-gray-600 mb-6">Richiedi una chiamata conoscitiva per discutere dei tuoi obiettivi e trovare il percorso formativo più adatto a te.</p>
+                        <a href="#contatti" class="nav-link block w-full text-center bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-teal-700">Parla con un Esperto</a>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Vantaggi Section -->
-        <section id="vantaggi" class="py-20 bg-gray-50">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Perché l'AI è una svolta per la tua impresa</h2>
-                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">L'Intelligenza Artificiale non è più solo per le grandi aziende. Ora è uno strumento accessibile e potente per far crescere anche le piccole e medie imprese.</p>
+        <!-- PAGINA GESTIONE FINANZIARIA -->
+        <div id="gestione-finanziaria" class="page bg-white">
+            <div class="container mx-auto px-6 py-20">
+                <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-4">Gestione Finanziaria Consapevole</h1>
+                <p class="text-xl text-gray-600 mb-12 max-w-4xl">Un partner indipendente per l'ottimizzazione finanziaria di privati e PMI. Creiamo strategie chiare per un futuro solido.</p>
+                
+                <div class="space-y-16">
+                    <!-- Per Privati -->
+                    <div>
+                        <h2 class="text-3xl font-bold mb-6 border-l-4 border-teal-500 pl-4">Per Privati</h2>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <p class="text-gray-700 text-lg">Analizziamo la tua situazione finanziaria per ottimizzare le spese, creare riserve di liquidità e costruire un piano di investimento personalizzato e indipendente, libero da conflitti di interesse.</p>
+                            <ul class="space-y-2 text-gray-700 list-disc list-inside">
+                                <li>Analisi del bilancio familiare</li>
+                                <li>Pianificazione del risparmio</li>
+                                <li>Creazione di portafogli di investimento efficienti</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Per PMI -->
+                    <div>
+                        <h2 class="text-3xl font-bold mb-6 border-l-4 border-teal-500 pl-4">Per PMI</h2>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <p class="text-gray-700 text-lg">Aiutiamo la tua impresa a liberare risorse interne. Attraverso un'analisi dei flussi di cassa e dei costi operativi, identifichiamo aree di inefficienza e creiamo strategie per recuperare fondi da reinvestire nella crescita.</p>
+                             <ul class="space-y-2 text-gray-700 list-disc list-inside">
+                                <li>Ottimizzazione dei flussi di cassa (cash flow)</li>
+                                <li>Analisi e riduzione dei costi superflui</li>
+                                <li>Pianificazione finanziaria strategica per la crescita</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+                
+                <!-- NUOVA SEZIONE: Ottimizzatore di Budget AI -->
+                <div class="mt-20 pt-16 border-t">
+                    <div class="max-w-3xl mx-auto text-center">
+                        <h2 class="text-3xl font-bold text-gray-900">✨ Ottimizzatore di Budget AI</h2>
+                        <p class="mt-4 text-lg text-gray-600">Inserisci le tue entrate e uscite mensili. La nostra AI ti fornirà 3 suggerimenti pratici per migliorare la tua gestione finanziaria.</p>
+                    </div>
+                    <div class="mt-8 max-w-2xl mx-auto bg-gray-50 p-8 rounded-xl shadow-lg">
+                        <textarea id="budget-input" rows="6" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500" placeholder="Esempio:&#10;Entrate:&#10;- Stipendio: 2000€&#10;&#10;Uscite:&#10;- Affitto: 700€&#10;- Spesa alimentare: 400€&#10;- Trasporti: 150€&#10;- Bollette: 100€&#10;- Svago e ristoranti: 250€"></textarea>
+                        <button id="optimize-budget-btn" class="mt-4 w-full bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-teal-700 transition-all">Ottimizza il mio budget</button>
+                        <div id="budget-loader" class="hidden justify-center mt-6"><div class="loader"></div></div>
+                        <div id="budget-error" class="hidden text-center text-red-600 mt-6"></div>
+                        <div id="budget-results" class="mt-6 space-y-4"></div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-16">
+                     <a href="#contatti" class="nav-link inline-block bg-teal-600 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:bg-teal-700">Richiedi la tua Analisi Finanziaria Completa</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGINA STRUMENTI AI -->
+        <div id="strumenti-ai" class="page bg-white">
+            <div class="container mx-auto px-6 py-20">
+                <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-4">Soluzioni AI e Digitali per PMI</h1>
+                <p class="text-xl text-gray-600 mb-12 max-w-4xl">Rendi la tua impresa più intelligente, veloce ed efficiente con strumenti digitali e automazioni su misura.</p>
+                
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow border border-gray-100">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-teal-100 text-teal-700 mb-4"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Aumento dell'Efficienza</h3>
-                        <p class="text-gray-600">Automatizza compiti ripetitivi e dispendiosi in termini di tempo, liberando risorse preziose da dedicare ad attività strategiche.</p>
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h3 class="font-semibold text-xl mb-2">Bot Telegram Personalizzati</h3>
+                        <p class="text-gray-600">Creiamo bot per automatizzare il customer service, inviare notifiche, gestire community o integrare servizi esterni direttamente su Telegram.</p>
                     </div>
-                    <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow border border-gray-100">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-teal-100 text-teal-700 mb-4"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Decisioni Migliori</h3>
-                        <p class="text-gray-600">Sfrutta la potenza dei tuoi dati. L'AI analizza trend e pattern per fornirti insight chiari e supportare le tue scelte strategiche.</p>
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h3 class="font-semibold text-xl mb-2">Sistemi di Prenotazione</h3>
+                        <p class="text-gray-600">Sviluppiamo sistemi di booking online semplici e intuitivi per professionisti e attività, integrabili con calendari e pagamenti.</p>
                     </div>
-                    <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow border border-gray-100">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-teal-100 text-teal-700 mb-4"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg></div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Servizio Clienti Potenziato</h3>
-                        <p class="text-gray-600">Offri supporto 24/7 con chatbot intelligenti, rispondi rapidamente alle domande frequenti e migliora la soddisfazione dei clienti.</p>
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h3 class="font-semibold text-xl mb-2">Automazioni (Make.com)</h3>
+                        <p class="text-gray-600">Colleghiamo le tue app e i tuoi servizi preferiti, creando flussi di lavoro automatici che ti fanno risparmiare tempo e riducono gli errori.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h3 class="font-semibold text-xl mb-2">Dashboard Dati su Misura</h3>
+                        <p class="text-gray-600">Trasformiamo i tuoi dati in dashboard interattive e di facile lettura per monitorare le performance e prendere decisioni migliori.</p>
+                    </div>
+                     <div class="bg-gray-50 p-6 rounded-lg">
+                        <h3 class="font-semibold text-xl mb-2">Reportistica Automatica</h3>
+                        <p class="text-gray-600">Genera report periodici (giornalieri, settimanali, mensili) in modo automatico, risparmiando ore di lavoro manuale.</p>
+                    </div>
+                     <div class="bg-gray-50 p-6 rounded-lg">
+                        <h3 class="font-semibold text-xl mb-2">Consulenza Digitale</h3>
+                        <p class="text-gray-600">Analizziamo i tuoi processi e ti guidiamo nella scelta e nell'implementazione degli strumenti digitali più adatti a te.</p>
+                    </div>
+                </div>
+
+                <!-- NUOVA SEZIONE: Generatore di Soluzioni AI -->
+                 <div class="mt-20 pt-16 border-t">
+                    <div class="max-w-3xl mx-auto text-center">
+                        <h2 class="text-3xl font-bold text-gray-900">✨ Generatore di Soluzioni AI</h2>
+                        <p class="mt-4 text-lg text-gray-600">Descrivi un problema o un'inefficienza nella tua attività. La nostra AI ti suggerirà uno strumento o un'automazione per risolverlo.</p>
+                    </div>
+                    <div class="mt-8 max-w-2xl mx-auto bg-gray-50 p-8 rounded-xl shadow-lg">
+                        <input type="text" id="pmi-problem-input" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500" placeholder="Esempio: 'Passo ore a gestire gli appuntamenti via email'...">
+                        <button id="solve-pmi-problem-btn" class="mt-4 w-full bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-teal-700 transition-all">Trova una soluzione AI</button>
+                        <div id="pmi-loader" class="hidden justify-center mt-6"><div class="loader"></div></div>
+                        <div id="pmi-error" class="hidden text-center text-red-600 mt-6"></div>
+                        <div id="pmi-results" class="mt-6"></div>
+                    </div>
+                </div>
+
+                 <div class="text-center mt-16">
+                     <a href="#contatti" class="nav-link inline-block bg-teal-600 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:bg-teal-700">Trasforma la tua Impresa</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGINA CHI SIAMO -->
+        <div id="chi-siamo" class="page bg-white">
+            <div class="container mx-auto px-6 py-20">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-8 text-center">La Nostra Filosofia</h1>
+                    <p class="text-xl text-center text-gray-600 mb-12">Crediamo in un approccio al business e alla finanza che sia etico, trasparente e profondamente umano. Il nostro obiettivo non è solo fornire servizi, ma creare valore reale e duraturo per i nostri clienti.</p>
+                    
+                    <div class="grid md:grid-cols-3 gap-8 text-center mb-16">
+                        <div>
+                            <h3 class="font-semibold text-xl mb-2">Precisione</h3>
+                            <p class="text-gray-600">Ogni nostra analisi e strategia si basa su dati oggettivi e metodi rigorosi.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-xl mb-2">Trasparenza</h3>
+                            <p class="text-gray-600">Comunichiamo in modo chiaro e onesto, senza costi nascosti o conflitti di interesse.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-xl mb-2">Indipendenza</h3>
+                            <p class="text-gray-600">La nostra consulenza è sempre e solo nel tuo interesse. Non vendiamo prodotti finanziari.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-8 md:p-12 rounded-lg text-center">
+                         <h2 class="text-3xl font-bold mb-4">Il Fondatore</h2>
+                         <img src="https://placehold.co/128x128/e2e8f0/334155?text=Foto" alt="Foto del fondatore" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white shadow-md">
+                         <p class="text-gray-700 text-lg">"Dopo anni di esperienza nei mercati finanziari e nello sviluppo tecnologico, ho fondato TapeDynamics con una visione chiara: portare un livello di precisione e etica professionale superiore in settori spesso opachi. Il mio impegno è guidare ogni cliente verso i propri obiettivi con gli strumenti e la conoscenza migliori."</p>
+                         <p class="font-semibold mt-4">Daniele - Fondatore di TapeDynamics</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Servizi Section -->
-        <section id="servizi" class="py-20">
-            <div class="container mx-auto px-6">
-                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Come posso aiutarti</h2>
-                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Offro un servizio personalizzato per integrare l'AI nel tuo business, dalla strategia all'implementazione.</p>
+        <!-- PAGINA CONTATTI -->
+        <div id="contatti" class="page bg-white">
+            <div class="container mx-auto px-6 py-20">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-4">Mettiamoci in Contatto</h1>
+                    <p class="text-xl text-gray-600 mb-12">Hai un'idea, un progetto o semplicemente vuoi saperne di più? Sono a tua disposizione. Scegli il canale che preferisci.</p>
                 </div>
-                <div class="max-w-4xl mx-auto space-y-8">
-                    <div class="flex flex-col md:flex-row items-center bg-gray-50 rounded-lg p-6 border">
-                        <div class="text-teal-600 mb-4 md:mb-0 md:mr-6"><svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg></div>
+                <div class="max-w-lg mx-auto bg-gray-50 p-8 rounded-xl shadow-lg space-y-6">
+                    <a href="mailto:tapedynamics8283@gmail.com" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-200 transition-colors">
+                        <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                         <div>
-                            <h3 class="text-2xl font-semibold text-gray-900">Consulenza Strategica e Roadmap</h3>
-                            <p class="text-gray-600 mt-2">Analizziamo insieme il tuo business per identificare le aree a più alto potenziale di miglioramento con l'AI. Creiamo una roadmap chiara e realistica per l'integrazione, definendo obiettivi e KPI misurabili.</p>
+                            <h3 class="font-semibold text-lg">Email</h3>
+                            <p class="text-gray-600">tapedynamics8283@gmail.com</p>
                         </div>
-                    </div>
-                    <div class="flex flex-col md:flex-row items-center bg-gray-50 rounded-lg p-6 border">
-                        <div class="text-teal-600 mb-4 md:mb-0 md:mr-6"><svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path></svg></div>
-                        <div>
-                            <h3 class="text-2xl font-semibold text-gray-900">Sviluppo e Integrazione di Soluzioni AI</h3>
-                            <p class="text-gray-600 mt-2">Sviluppo soluzioni su misura come chatbot intelligenti per il customer service, sistemi di raccomandazione per e-commerce o strumenti di automazione per il marketing. Integro i migliori tool AI nei tuoi sistemi esistenti.</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col md:flex-row items-center bg-gray-50 rounded-lg p-6 border">
-                        <div class="text-teal-600 mb-4 md:mb-0 md:mr-6"><svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M12 21a9 9 0 110-18 9 9 0 010 18zM12 3v1.5M12 19.5V21M4 7l2 1M4 7l2-1M4 7v2.5M12 12a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path></svg></div>
-                        <div>
-                            <h3 class="text-2xl font-semibold text-gray-900">Formazione e Supporto</h3>
-                            <p class="text-gray-600 mt-2">Non ti lascio solo dopo l'implementazione. Offro formazione al tuo team per utilizzare al meglio i nuovi strumenti e fornisco supporto continuo per garantire che la tua strategia AI evolva insieme al tuo business.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Gemini API Demo Section -->
-        <section id="gemini-demo" class="py-20 bg-gray-50">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Metti alla Prova la Nostra AI</h2>
-                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Descrivi la tua attività e ottieni subito 3 idee innovative generate dalla nostra intelligenza artificiale per farla crescere.</p>
-                </div>
-                <div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-100">
-                    <div class="flex flex-col sm:flex-row gap-4 items-center">
-                        <input type="text" id="business-input" placeholder="Es: 'Ristorante italiano', 'E-commerce di scarpe'..." class="w-full flex-grow px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition">
-                        <button id="generate-ideas-btn" class="w-full sm:w-auto bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-teal-700 transition-all flex items-center justify-center space-x-2">
-                            <span>✨ Genera Idee con l'AI</span>
-                        </button>
-                    </div>
-                    <div id="loader" class="hidden justify-center mt-8">
-                        <div class="loader"></div>
-                    </div>
-                    <div id="error-message" class="hidden text-center text-red-600 mt-6 p-4 bg-red-100 rounded-lg"></div>
-                    <div id="results-container" class="mt-8 space-y-6"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contatti" class="py-20 bg-teal-700 text-white">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold">Pronto a trasformare il tuo business?</h2>
-                <p class="mt-4 text-lg text-teal-100 max-w-2xl mx-auto">
-                    Parliamone insieme. Offro una prima consulenza gratuita e senza impegno per valutare come l'AI può aiutare concretamente la tua impresa.
-                </p>
-                <div class="mt-10 w-full max-w-md mx-auto flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a href="mailto:tapedynamics8283@gmail.com?subject=Richiesta Consulenza AI per PMI" class="w-full sm:w-auto bg-white text-teal-700 px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:bg-gray-100 transform hover:scale-105 transition-all flex items-center justify-center gap-2">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                        Contattami via Email
                     </a>
-                    <a href="https://wa.me/34613626253" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-green-500 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:bg-green-600 transform hover:scale-105 transition-all flex items-center justify-center gap-2">
-                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.269.655 4.512 1.924 6.344l-1.226 4.485 4.575-1.196zM12 5.999c-3.316 0-6.002 2.686-6.002 6.001 0 1.573.628 3.012 1.652 4.068l-.356 1.297 1.34-.348c.972.55 2.05.873 3.16.874 3.316 0 6.001-2.686 6.001-6.001s-2.685-6.001-6.001-6.001zm0 1.5c2.489 0 4.501 2.012 4.501 4.501s-2.012 4.501-4.501 4.501-4.501-2.012-4.501-4.501 2.012-4.501 4.501-4.501z"/></svg>
-                        Scrivimi su WhatsApp
+                    <a href="https://wa.me/34613626253" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-200 transition-colors">
+                        <svg class="w-8 h-8 text-teal-600" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.269.655 4.512 1.924 6.344l-1.226 4.485 4.575-1.196zM12 5.999c-3.316 0-6.002 2.686-6.002 6.001 0 1.573.628 3.012 1.652 4.068l-.356 1.297 1.34-.348c.972.55 2.05.873 3.16.874 3.316 0 6.001-2.686 6.001-6.001s-2.685-6.001-6.001-6.001zm0 1.5c2.489 0 4.501 2.012 4.501 4.501s-2.012 4.501-4.501 4.501-4.501-2.012-4.501-4.501 2.012-4.501 4.501-4.501z"/></svg>
+                        <div>
+                            <h3 class="font-semibold text-lg">WhatsApp & Telefono</h3>
+                            <p class="text-gray-600">+34 613 62 62 53</p>
+                        </div>
+                    </a>
+                     <!-- MODIFICA QUI IL LINK CALENDLY -->
+                     <a href="IL_TUO_LINK_CALENDLY" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-200 transition-colors">
+                        <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <div>
+                            <h3 class="font-semibold text-lg">Prenota una Chiamata</h3>
+                            <p class="text-gray-600">Fissa direttamente un appuntamento sul mio calendario.</p>
+                        </div>
                     </a>
                 </div>
-                 <p class="mt-6 text-sm text-teal-200">Oppure scrivimi direttamente a: <a href="mailto:tapedynamics8283@gmail.com" class="underline hover:text-white">tapedynamics8283@gmail.com</a></p>
             </div>
-        </section>
+        </div>
+
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white">
+    <footer class="bg-gray-900 text-white">
         <div class="container mx-auto px-6 py-8 text-center">
-            <p>&copy; 2025 TapeDynamics8283 S.L. Tutti i diritti riservati.</p>
-            <p class="text-sm text-gray-400 mt-2">P.IVA B75723858 - <a href="#" class="underline hover:text-white">Privacy Policy</a></p>
+            <p>&copy; 2025 TapeDynamics 8283 S.L. Tutti i diritti riservati.</p>
+            <p class="text-sm text-gray-400 mt-2">P.IVA B75723858 - Spagna</p>
         </div>
     </footer>
 
-    <!-- Pulsante WhatsApp Flottante -->
-    <a href="https://wa.me/34613626253" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-all transform hover:scale-110 z-50">
-        <svg class="w-9 h-9" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.269.655 4.512 1.924 6.344l-1.226 4.485 4.575-1.196zM12 5.999c-3.316 0-6.002 2.686-6.002 6.001 0 1.573.628 3.012 1.652 4.068l-.356 1.297 1.34-.348c.972.55 2.05.873 3.16.874 3.316 0 6.001-2.686 6.001-6.001s-2.685-6.001-6.001-6.001zm0 1.5c2.489 0 4.501 2.012 4.501 4.501s-2.012 4.501-4.501 4.501-4.501-2.012-4.501-4.501 2.012-4.501 4.501-4.501z"/></svg>
-    </a>
-
     <script>
-        // Script per il menu mobile
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
-        const mobileMenuLinks = mobileMenu.getElementsByTagName('a');
-        for (let link of mobileMenuLinks) {
-            link.addEventListener('click', () => { mobileMenu.classList.add('hidden'); });
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- LOGICA DI NAVIGAZIONE ---
+            const pages = document.querySelectorAll('.page');
+            const navLinks = document.querySelectorAll('.nav-link-item');
+            const headerLinks = document.querySelectorAll('header .nav-link');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
 
-        // Script per la demo con Gemini API
-        const generateBtn = document.getElementById('generate-ideas-btn');
-        const businessInput = document.getElementById('business-input');
-        const resultsContainer = document.getElementById('results-container');
-        const loader = document.getElementById('loader');
-        const errorMessage = document.getElementById('error-message');
+            const showPage = (pageId) => {
+                const targetId = pageId.startsWith('#') ? pageId.substring(1) : pageId;
+                
+                pages.forEach(page => page.classList.remove('active'));
 
-        generateBtn.addEventListener('click', async () => {
-            const businessDescription = businessInput.value.trim();
-            if (!businessDescription) {
-                errorMessage.textContent = 'Per favore, inserisci una descrizione della tua attività.';
-                errorMessage.classList.remove('hidden');
-                return;
-            }
+                const targetPage = document.getElementById(targetId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                } else {
+                    document.getElementById('home').classList.add('active');
+                }
 
-            resultsContainer.innerHTML = '';
-            errorMessage.classList.add('hidden');
-            loader.classList.remove('hidden');
-            loader.classList.add('flex');
-            generateBtn.disabled = true;
+                navLinks.forEach(link => {
+                    link.classList.toggle('nav-link-active', link.getAttribute('href') === `#${targetId}`);
+                });
 
-            const userPrompt = `Sei un consulente di strategia aziendale esperto di intelligenza artificiale. Il tuo cliente è il proprietario di una piccola-media impresa. Data la seguente descrizione del suo business: "${businessDescription}", fornisci 3 idee concrete e attuabili su come può usare l'AI per migliorare l'efficienza, il marketing o il servizio clienti. Sii specifico e orientato ai risultati.`;
+                window.scrollTo(0, 0);
+            };
 
-            try {
-                // *** CHIAMATA DIRETTA ALLA FUNZIONE PER DEBUGGING ***
+            const handleNavClick = (e) => {
+                e.preventDefault();
+                const targetId = e.currentTarget.getAttribute('href');
+                if (window.location.hash !== targetId) {
+                    window.location.hash = targetId;
+                } else {
+                    showPage(targetId);
+                }
+                mobileMenu.classList.add('hidden');
+            };
+
+            [...navLinks, ...headerLinks].forEach(link => {
+                link.addEventListener('click', handleNavClick);
+            });
+
+            window.addEventListener('hashchange', () => showPage(window.location.hash || '#home'));
+            showPage(window.location.hash || '#home');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // --- LOGICA API GEMINI ---
+            
+            async function callGemini(prompt, schema) {
+                const payload = {
+                    contents: [{ role: "user", parts: [{ text: prompt }] }],
+                };
+                if (schema) {
+                    payload.generationConfig = {
+                        responseMimeType: "application/json",
+                        responseSchema: schema
+                    };
+                }
+                
+                // La funzione Netlify ora riceve sia il prompt che lo schema
                 const response = await fetch('/.netlify/functions/gemini', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt: userPrompt })
+                    body: JSON.stringify({ prompt, schema })
                 });
 
                 const result = await response.json();
 
                 if (!response.ok) {
-                    // Se la risposta non è OK, l'errore viene dal nostro server o dall'API di Gemini
                     throw new Error(result.error || 'Errore sconosciuto dal server.');
                 }
                 
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    
-                    const jsonText = result.candidates[0].content.parts[0].text;
-                    const parsedJson = JSON.parse(jsonText);
-                    displayResults(parsedJson.idee);
-
+                if (result.candidates && result.candidates.length > 0) {
+                    return result.candidates[0].content.parts[0].text;
                 } else {
-                    throw new Error("La risposta dell'API non ha un formato valido o non ha generato candidati.");
+                    throw new Error("La risposta dell'API non ha un formato valido.");
                 }
+            }
 
-            } catch (error) {
-                console.error('Errore durante il processo di generazione:', error);
-                errorMessage.textContent = `Si è verificato un errore: ${error.message}. Riprova più tardi.`;
-                errorMessage.classList.remove('hidden');
-            } finally {
-                loader.classList.add('hidden');
-                loader.classList.remove('flex');
-                generateBtn.disabled = false;
+            // 1. Ottimizzatore di Budget
+            const budgetBtn = document.getElementById('optimize-budget-btn');
+            if (budgetBtn) {
+                const budgetInput = document.getElementById('budget-input');
+                const budgetLoader = document.getElementById('budget-loader');
+                const budgetError = document.getElementById('budget-error');
+                const budgetResults = document.getElementById('budget-results');
+
+                budgetBtn.addEventListener('click', async () => {
+                    if (!budgetInput.value.trim()) {
+                        budgetError.textContent = 'Per favore, inserisci i tuoi dati.';
+                        budgetError.style.display = 'block';
+                        return;
+                    }
+                    budgetLoader.style.display = 'flex';
+                    budgetError.style.display = 'none';
+                    budgetResults.innerHTML = '';
+                    budgetBtn.disabled = true;
+
+                    const prompt = `Sei un consulente finanziario. Analizza le seguenti entrate e uscite mensili di un utente e fornisci esattamente 3 suggerimenti brevi, concreti e incoraggianti per ottimizzare il budget, identificare risparmi o migliorare la gestione. Dati utente: "${budgetInput.value}"`;
+                    const schema = {
+                        type: "OBJECT",
+                        properties: {
+                            suggerimenti: {
+                                type: "ARRAY",
+                                items: {
+                                    type: "OBJECT",
+                                    properties: {
+                                        titolo: { type: "STRING" },
+                                        descrizione: { type: "STRING" }
+                                    },
+                                    required: ["titolo", "descrizione"]
+                                }
+                            }
+                        },
+                        required: ["suggerimenti"]
+                    };
+
+                    try {
+                        const jsonText = await callGemini(prompt, schema);
+                        const result = JSON.parse(jsonText);
+                        
+                        result.suggerimenti.forEach(suggerimento => {
+                            const card = document.createElement('div');
+                            card.className = 'bg-white p-4 rounded-lg border';
+                            card.innerHTML = `<h4 class="font-semibold text-teal-700">${suggerimento.titolo}</h4><p class="text-gray-600">${suggerimento.descrizione}</p>`;
+                            budgetResults.appendChild(card);
+                        });
+
+                    } catch (error) {
+                        budgetError.textContent = `Si è verificato un errore: ${error.message}`;
+                        budgetError.style.display = 'block';
+                    } finally {
+                        budgetLoader.style.display = 'none';
+                        budgetBtn.disabled = false;
+                    }
+                });
+            }
+
+            // 2. Generatore di Soluzioni PMI
+            const pmiBtn = document.getElementById('solve-pmi-problem-btn');
+            if (pmiBtn) {
+                const pmiInput = document.getElementById('pmi-problem-input');
+                const pmiLoader = document.getElementById('pmi-loader');
+                const pmiError = document.getElementById('pmi-error');
+                const pmiResults = document.getElementById('pmi-results');
+
+                pmiBtn.addEventListener('click', async () => {
+                     if (!pmiInput.value.trim()) {
+                        pmiError.textContent = 'Per favore, descrivi un problema.';
+                        pmiError.style.display = 'block';
+                        return;
+                    }
+                    pmiLoader.style.display = 'flex';
+                    pmiError.style.display = 'none';
+                    pmiResults.innerHTML = '';
+                    pmiBtn.disabled = true;
+
+                    const prompt = `Sei un consulente di digitalizzazione per PMI. Un imprenditore descrive questo problema: "${pmiInput.value}". Fornisci una soluzione tecnologica specifica (es. un tipo di software, un'automazione con Make.com, un bot Telegram). Descrivi la soluzione, i suoi vantaggi e i primi passi per implementarla. Sii conciso e pratico.`;
+                    
+                    try {
+                        const textResult = await callGemini(prompt, null); // Nessuno schema per risposta libera
+                        const card = document.createElement('div');
+                        card.className = 'bg-white p-6 rounded-lg border';
+                        card.innerHTML = textResult.replace(/\n/g, '<br>');
+                        pmiResults.appendChild(card);
+                    } catch (error) {
+                        pmiError.textContent = `Si è verificato un errore: ${error.message}`;
+                        pmiError.style.display = 'block';
+                    } finally {
+                        pmiLoader.style.display = 'none';
+                        pmiBtn.disabled = false;
+                    }
+                });
             }
         });
-
-        function displayResults(ideas) {
-            if (!ideas || ideas.length === 0) {
-                 errorMessage.textContent = 'Non è stato possibile generare idee. Prova a riformulare la tua descrizione.';
-                 errorMessage.classList.remove('hidden');
-                 return;
-            }
-            ideas.forEach(idea => {
-                const card = document.createElement('div');
-                card.className = 'bg-teal-50/50 p-6 rounded-lg border border-teal-200 transform transition-all hover:scale-[1.02] hover:shadow-md';
-                const title = document.createElement('h3');
-                title.className = 'text-xl font-semibold text-teal-800 mb-2';
-                title.textContent = idea.titolo;
-                const description = document.createElement('p');
-                description.className = 'text-gray-600';
-                description.textContent = idea.descrizione;
-                card.appendChild(title);
-                card.appendChild(description);
-                resultsContainer.appendChild(card);
-            });
-        }
     </script>
 
 </body>
