@@ -3,6 +3,9 @@
 // Usiamo 'node-fetch' per fare chiamate API dal backend
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
+// Funzione di utility per l'attesa (delay)
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 exports.handler = async function(event) {
     // Accetta solo richieste di tipo POST
     if (event.httpMethod !== 'POST') {
@@ -40,21 +43,58 @@ exports.handler = async function(event) {
             };
         }
 
-        const apiResponse = await fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
+        // NUOVA LOGICA: Retry con exponential backoff
+        let apiResponse;
+        const maxRetries = 3;
+        let attempt = 0;
+        let lastError = null;
 
-        const result = await apiResponse.json();
+        while (attempt < maxRetries) {
+            try {
+                apiResponse = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
 
-        if (!apiResponse.ok) {
-            console.error('API Error:', result);
-            return {
-                statusCode: apiResponse.status,
-                body: JSON.stringify({ error: result.error?.message || 'Errore durante la chiamata all\'API di Google.' })
+                // Se la risposta è 503 (Service Unavailable / Overloaded) o 429 (Too Many Requests), ritenta
+                if (apiResponse.status === 503 || apiResponse.status === 429) {
+                    const errorJson = await apiResponse.json();
+                    throw new Error(errorJson.error?.message || 'Model is overloaded');
+                }
+
+                // Se la risposta è ok, esci dal ciclo
+                if (apiResponse.ok) {
+                    break;
+                } else {
+                    // Per altri errori, salva l'errore e interrompi
+                    const result = await apiResponse.json();
+                    lastError = result.error?.message || `Errore API con status ${apiResponse.status}`;
+                    break;
+                }
+
+            } catch (error) {
+                lastError = error.message;
+                attempt++;
+                if (attempt < maxRetries) {
+                    const delayTime = Math.pow(2, attempt) * 1000; // Attesa di 2s, 4s
+                    await delay(delayTime);
+                } else {
+                    // Se si è raggiunto il numero massimo di tentativi
+                    lastError = 'Il modello è attualmente sovraccarico. Riprova tra qualche minuto.';
+                }
+            }
+        }
+        
+        // Se dopo i tentativi la risposta non è ancora valida, restituisci l'ultimo errore
+        if (!apiResponse || !apiResponse.ok) {
+             return {
+                statusCode: apiResponse ? apiResponse.status : 503,
+                body: JSON.stringify({ error: lastError })
             };
         }
+
+        const result = await apiResponse.json();
         
         // NUOVO CONTROLLO DI SICUREZZA: Verifica che la risposta abbia il formato atteso
         if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0 && result.candidates[0].content.parts[0].text) {
