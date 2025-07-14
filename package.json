@@ -1,0 +1,8 @@
+{
+  "name": "tapedynamics-netlify-functions",
+  "version": "1.0.0",
+  "description": "Backend functions for Tapedynamics website",
+  "dependencies": {
+    "node-fetch": "3.3.2"
+  }
+}
