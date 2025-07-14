@@ -579,40 +579,24 @@
 
             // --- LOGICA API GEMINI ---
             
-            // NOTA: La logica per la chiamata a Gemini è stata mantenuta identica
-            // ma ora interagisce con gli elementi ridisegnati.
             async function callGemini(prompt, schema) {
-                const payload = {
-                    contents: [{ role: "user", parts: [{ text: prompt }] }],
-                };
-                if (schema) {
-                    payload.generationConfig = {
-                        responseMimeType: "application/json",
-                        responseSchema: schema
-                    };
-                }
-                
-                const apiKey = "" // Lasciare vuoto
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                
-                const response = await fetch(apiUrl, {
+                // The frontend now calls our own secure function on Netlify
+                const response = await fetch('/.netlify/functions/gemini', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    // We send the prompt and schema to our function
+                    body: JSON.stringify({ prompt, schema }) 
                 });
 
                 const result = await response.json();
 
                 if (!response.ok) {
-                    const errorMsg = result?.error?.message || 'Errore sconosciuto dal server.';
-                    throw new Error(errorMsg);
+                    // The error message now comes from our serverless function's response
+                    throw new Error(result.error || 'Errore dalla funzione Netlify.');
                 }
                 
-                if (result.candidates && result.candidates.length > 0) {
-                    return result.candidates[0].content.parts[0].text;
-                } else {
-                    throw new Error("La risposta dell'API non ha un formato valido.");
-                }
+                // The serverless function will return the final text payload from Gemini
+                return result.text;
             }
 
             // 1. Ottimizzatore di Budget
