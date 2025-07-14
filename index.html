@@ -9,10 +9,27 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* --- NUOVA PALETTE COLORI E STILI PERSONALIZZATI --- */
+        :root {
+            --gradient-start: #000000;
+            --gradient-end: #3533cd;
+            --electric-cyan: #36D7D9;
+            --aqua-mint: #66D9B8;
+            --lime-green: #B8E986;
+            --dark-navy: #252B42;
+            --background-section: #2c3350;
+            --slate-gray: #8A94A7; /* Grigio più chiaro per testo su fondo scuro */
+            --text-light: #F4F4F4;
+            --text-dark: #252B42;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* light gray background */
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            background-attachment: fixed;
+            color: var(--text-light);
         }
+        
         /* Stile per le pagine nascoste */
         .page {
             display: none;
@@ -25,14 +42,21 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Stili per link di navigazione attivi */
         .nav-link-active {
-            color: #0d9488; /* Teal-700 */
+            color: var(--electric-cyan);
             font-weight: 600;
         }
+        .nav-link-item:hover {
+            color: var(--electric-cyan);
+        }
+
+        /* Loader personalizzato */
         .loader {
-            border: 4px solid #f3f3f3;
+            border: 4px solid rgba(243, 243, 243, 0.3);
             border-radius: 50%;
-            border-top: 4px solid #0d9488;
+            border-top: 4px solid var(--electric-cyan);
             width: 30px;
             height: 30px;
             animation: spin 1s linear infinite;
@@ -41,39 +65,50 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Helper classes per i nuovi colori */
+        .bg-electric-cyan { background-color: var(--electric-cyan); }
+        .text-electric-cyan { color: var(--electric-cyan); }
+        .border-electric-cyan { border-color: var(--electric-cyan); }
+        .text-aqua-mint { color: var(--aqua-mint); }
+        .text-lime-green { color: var(--lime-green); }
+        .bg-dark-navy { background-color: var(--dark-navy); }
+        .bg-background-section { background-color: var(--background-section); }
+        .text-slate-gray { color: var(--slate-gray); }
+        .text-dark-navy { color: var(--dark-navy); }
     </style>
 </head>
-<body class="text-gray-800 flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen">
 
     <!-- Header -->
-    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+    <header class="bg-dark-navy/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-gray/20">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#home" class="nav-link text-2xl font-bold text-gray-900">
-                Tape<span class="font-light text-teal-600">Dynamics</span>
+            <a href="#home" class="nav-link text-2xl font-bold text-text-light">
+                Tape<span class="font-light text-electric-cyan">Dynamics</span>
             </a>
             <nav class="hidden lg:flex items-center space-x-6">
-                <a href="#home" class="nav-link-item text-gray-600 hover:text-teal-600 transition-colors">Home</a>
-                <a href="#formazione-trading" class="nav-link-item text-gray-600 hover:text-teal-600 transition-colors">Formazione Trading</a>
-                <a href="#gestione-finanziaria" class="nav-link-item text-gray-600 hover:text-teal-600 transition-colors">Gestione Finanziaria</a>
-                <a href="#strumenti-ai" class="nav-link-item text-gray-600 hover:text-teal-600 transition-colors">Strumenti AI</a>
-                <a href="#formazione-pro" class="nav-link-item text-gray-600 hover:text-teal-600 transition-colors">Formazione Pro</a>
-                <a href="#chi-siamo" class="nav-link-item text-gray-600 hover:text-teal-600 transition-colors">Chi Siamo</a>
-                <a href="#contatti" class="nav-link-item bg-teal-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-teal-700 transition-all">Contatti</a>
+                <a href="#home" class="nav-link-item text-slate-gray transition-colors">Home</a>
+                <a href="#formazione-trading" class="nav-link-item text-slate-gray transition-colors">Formazione Trading</a>
+                <a href="#gestione-finanziaria" class="nav-link-item text-slate-gray transition-colors">Gestione Finanziaria</a>
+                <a href="#strumenti-ai" class="nav-link-item text-slate-gray transition-colors">Strumenti AI</a>
+                <a href="#formazione-pro" class="nav-link-item text-slate-gray transition-colors">Formazione Pro</a>
+                <a href="#chi-siamo" class="nav-link-item text-slate-gray transition-colors">Chi Siamo</a>
+                <a href="#contatti" class="nav-link-item bg-electric-cyan text-dark-navy px-4 py-2 rounded-lg shadow-md hover:opacity-90 transition-all">Contatti</a>
             </nav>
-            <button id="mobile-menu-button" class="lg:hidden text-gray-700">
+            <button id="mobile-menu-button" class="lg:hidden text-slate-gray">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden lg:hidden">
+        <div id="mobile-menu" class="hidden lg:hidden bg-dark-navy/95">
             <div class="px-6 pb-4 space-y-2">
-                <a href="#home" class="nav-link-item block py-2 text-gray-600 hover:text-teal-600">Home</a>
-                <a href="#formazione-trading" class="nav-link-item block py-2 text-gray-600 hover:text-teal-600">Formazione Trading</a>
-                <a href="#gestione-finanziaria" class="nav-link-item block py-2 text-gray-600 hover:text-teal-600">Gestione Finanziaria</a>
-                <a href="#strumenti-ai" class="nav-link-item block py-2 text-gray-600 hover:text-teal-600">Strumenti AI</a>
-                <a href="#formazione-pro" class="nav-link-item block py-2 text-gray-600 hover:text-teal-600">Formazione per Professionisti</a>
-                <a href="#chi-siamo" class="nav-link-item block py-2 text-gray-600 hover:text-teal-600">Chi Siamo</a>
-                <a href="#contatti" class="nav-link-item block mt-2 text-center bg-teal-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-teal-700">Contatti</a>
+                <a href="#home" class="nav-link-item block py-2 text-slate-gray">Home</a>
+                <a href="#formazione-trading" class="nav-link-item block py-2 text-slate-gray">Formazione Trading</a>
+                <a href="#gestione-finanziaria" class="nav-link-item block py-2 text-slate-gray">Gestione Finanziaria</a>
+                <a href="#strumenti-ai" class="nav-link-item block py-2 text-slate-gray">Strumenti AI</a>
+                <a href="#formazione-pro" class="nav-link-item block py-2 text-slate-gray">Formazione per Professionisti</a>
+                <a href="#chi-siamo" class="nav-link-item block py-2 text-slate-gray">Chi Siamo</a>
+                <a href="#contatti" class="nav-link-item block mt-2 text-center bg-electric-cyan text-dark-navy px-4 py-2 rounded-lg shadow-md">Contatti</a>
             </div>
         </div>
     </header>
@@ -83,52 +118,52 @@
 
         <!-- PAGINA HOME -->
         <div id="home" class="page">
-            <section class="bg-white">
+            <section class="bg-dark-navy/30">
                 <div class="container mx-auto px-6 py-20 md:py-32 text-center">
-                    <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
-                        Precisione, Strategia, Innovazione.
+                    <h1 class="text-4xl md:text-6xl font-bold text-text-light leading-tight">
+                        Precisione, Strategia, <span class="text-electric-cyan">Innovazione.</span>
                     </h1>
-                    <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                    <p class="mt-6 text-lg md:text-xl text-slate-gray max-w-3xl mx-auto">
                         TapeDynamics è il partner strategico per trader, privati e PMI che puntano all'eccellenza. Offriamo formazione, gestione finanziaria e soluzioni AI su misura.
                     </p>
                     <div class="mt-10">
-                        <a href="#contatti" class="nav-link bg-teal-600 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:bg-teal-700 transform hover:scale-105 transition-all inline-block">
+                        <a href="#contatti" class="nav-link bg-electric-cyan text-dark-navy px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:opacity-90 transform hover:scale-105 transition-all inline-block">
                             Fissa una Consulenza Gratuita
                         </a>
                     </div>
                 </div>
             </section>
             
-            <section class="py-20">
+            <section class="py-20 bg-black/10">
                 <div class="container mx-auto px-6">
                     <div class="text-center mb-16">
-                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Le Nostre Aree di Attività</h2>
-                        <p class="mt-4 text-lg text-gray-600">Quattro pilastri per la tua crescita.</p>
+                        <h2 class="text-3xl md:text-4xl font-bold text-text-light">Le Nostre Aree di Attività</h2>
+                        <p class="mt-4 text-lg text-slate-gray">Quattro pilastri per la tua crescita.</p>
                     </div>
                     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                         <!-- Card 1 -->
-                        <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow border flex flex-col">
-                            <h3 class="text-2xl font-semibold text-gray-900 mb-3">Formazione Trading</h3>
-                            <p class="text-gray-600 flex-grow mb-6">Un metodo basato sulla precisione dei concetti ICT per operare con profitto sui futures americani.</p>
-                            <a href="#formazione-trading" class="nav-link text-teal-600 font-semibold mt-auto hover:text-teal-800">Scopri il metodo &rarr;</a>
+                        <div class="bg-background-section p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all border border-slate-gray/20 flex flex-col">
+                            <h3 class="text-2xl font-semibold text-text-light mb-3">Formazione Trading</h3>
+                            <p class="text-slate-gray flex-grow mb-6">Un metodo basato sulla precisione dei concetti ICT per operare con profitto sui futures americani.</p>
+                            <a href="#formazione-trading" class="nav-link text-electric-cyan font-semibold mt-auto hover:text-aqua-mint">Scopri il metodo &rarr;</a>
                         </div>
                         <!-- Card 2 -->
-                        <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow border flex flex-col">
-                            <h3 class="text-2xl font-semibold text-gray-900 mb-3">Gestione Finanziaria</h3>
-                            <p class="text-gray-600 flex-grow mb-6">Pianificazione su misura per privati e PMI. Ottimizziamo le risorse e creiamo piani di investimento consapevoli.</p>
-                            <a href="#gestione-finanziaria" class="nav-link text-teal-600 font-semibold mt-auto hover:text-teal-800">Ottimizza le tue finanze &rarr;</a>
+                        <div class="bg-background-section p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all border border-slate-gray/20 flex flex-col">
+                            <h3 class="text-2xl font-semibold text-text-light mb-3">Gestione Finanziaria</h3>
+                            <p class="text-slate-gray flex-grow mb-6">Pianificazione su misura per privati e PMI. Ottimizziamo le risorse e creiamo piani di investimento consapevoli.</p>
+                            <a href="#gestione-finanziaria" class="nav-link text-electric-cyan font-semibold mt-auto hover:text-aqua-mint">Ottimizza le tue finanze &rarr;</a>
                         </div>
                         <!-- Card 3 -->
-                        <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow border flex flex-col">
-                            <h3 class="text-2xl font-semibold text-gray-900 mb-3">Strumenti AI per PMI</h3>
-                            <p class="text-gray-600 flex-grow mb-6">Sviluppiamo soluzioni digitali e automazioni intelligenti per rendere la tua impresa più efficiente.</p>
-                            <a href="#strumenti-ai" class="nav-link text-teal-600 font-semibold mt-auto hover:text-teal-800">Innova il tuo business &rarr;</a>
+                        <div class="bg-background-section p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all border border-slate-gray/20 flex flex-col">
+                            <h3 class="text-2xl font-semibold text-text-light mb-3">Strumenti AI per PMI</h3>
+                            <p class="text-slate-gray flex-grow mb-6">Sviluppiamo soluzioni digitali e automazioni intelligenti per rendere la tua impresa più efficiente.</p>
+                            <a href="#strumenti-ai" class="nav-link text-electric-cyan font-semibold mt-auto hover:text-aqua-mint">Innova il tuo business &rarr;</a>
                         </div>
                          <!-- Card 4 -->
-                        <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow border flex flex-col">
-                            <h3 class="text-2xl font-semibold text-gray-900 mb-3">Formazione per Pro</h3>
-                            <p class="text-gray-600 flex-grow mb-6">Diventa un esperto di integrazione AI. Insegniamo a professionisti e agenzie come costruire soluzioni innovative.</p>
-                            <a href="#formazione-pro" class="nav-link text-teal-600 font-semibold mt-auto hover:text-teal-800">Diventa un esperto &rarr;</a>
+                        <div class="bg-background-section p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all border border-slate-gray/20 flex flex-col">
+                            <h3 class="text-2xl font-semibold text-text-light mb-3">Formazione per Pro</h3>
+                            <p class="text-slate-gray flex-grow mb-6">Diventa un esperto di integrazione AI. Insegniamo a professionisti e agenzie come costruire soluzioni innovative.</p>
+                            <a href="#formazione-pro" class="nav-link text-electric-cyan font-semibold mt-auto hover:text-aqua-mint">Diventa un esperto &rarr;</a>
                         </div>
                     </div>
                 </div>
@@ -136,255 +171,254 @@
         </div>
 
         <!-- PAGINA FORMAZIONE TRADING -->
-        <div id="formazione-trading" class="page bg-white">
+        <div id="formazione-trading" class="page bg-dark-navy">
             <div class="container mx-auto px-6 py-20">
-                <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-4">Formazione Trading d'Elite</h1>
-                <p class="text-xl text-gray-600 mb-12 max-w-4xl">Basta con l'analisi tecnica discrezionale. Il nostro metodo si fonda sulla precisione algoritmica dei concetti ICT per interpretare le reali intenzioni del mercato.</p>
+                <h1 class="text-4xl md:text-5xl font-bold text-electric-cyan mb-4">Formazione Trading d'Elite</h1>
+                <p class="text-xl text-slate-gray mb-12 max-w-4xl">Basta con l'analisi tecnica discrezionale. Il nostro metodo si fonda sulla precisione algoritmica dei concetti ICT per interpretare le reali intenzioni del mercato.</p>
                 
                 <div class="grid md:grid-cols-2 gap-12 items-center">
                     <div class="space-y-8">
                         <div>
-                            <h2 class="text-2xl font-semibold mb-3">Cosa Imparerai</h2>
-                            <ul class="space-y-3 text-gray-700">
-                                <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">&#10003;</span><span><strong>Precisione Assoluta:</strong> Identificare e operare su setup ad alta probabilità come i Propulsion Block.</span></li>
-                                <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">&#10003;</span><span><strong>Gestione del Rischio Professionale:</strong> Tecniche per proteggere il capitale e massimizzare i profitti.</span></li>
-                                <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">&#10003;</span><span><strong>Il Diario di Trading:</strong> Uno strumento fondamentale per analizzare le performance e migliorare costantemente.</span></li>
-                                <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">&#10003;</span><span><strong>Operatività Reale:</strong> Sessioni di live trading per applicare i concetti in tempo reale sui futures americani (S&P 500, Nasdaq).</span></li>
+                            <h2 class="text-2xl font-semibold mb-3 text-text-light">Cosa Imparerai</h2>
+                            <ul class="space-y-3 text-slate-gray">
+                                <li class="flex items-start"><span class="text-aqua-mint mr-3 mt-1">&#10003;</span><span><strong>Precisione Assoluta:</strong> Identificare e operare su setup ad alta probabilità come i Propulsion Block.</span></li>
+                                <li class="flex items-start"><span class="text-aqua-mint mr-3 mt-1">&#10003;</span><span><strong>Gestione del Rischio Professionale:</strong> Tecniche per proteggere il capitale e massimizzare i profitti.</span></li>
+                                <li class="flex items-start"><span class="text-aqua-mint mr-3 mt-1">&#10003;</span><span><strong>Il Diario di Trading:</strong> Uno strumento fondamentale per analizzare le performance e migliorare costantemente.</span></li>
+                                <li class="flex items-start"><span class="text-aqua-mint mr-3 mt-1">&#10003;</span><span><strong>Operatività Reale:</strong> Sessioni di live trading per applicare i concetti in tempo reale sui futures americani (S&P 500, Nasdaq).</span></li>
                             </ul>
                         </div>
                         <div>
-                            <h2 class="text-2xl font-semibold mb-3">Come Accedere</h2>
-                            <p class="text-gray-700">Offriamo percorsi personalizzati in base al tuo livello di esperienza, attraverso consulenze one-to-one, corsi online on-demand e sessioni di affiancamento live.</p>
+                            <h2 class="text-2xl font-semibold mb-3 text-text-light">Come Accedere</h2>
+                            <p class="text-slate-gray">Offriamo percorsi personalizzati in base al tuo livello di esperienza, attraverso consulenze one-to-one, corsi online on-demand e sessioni di affiancamento live.</p>
                         </div>
                     </div>
                     <div>
-                        <img src="images/trading.png" alt="Grafico di trading" class="rounded-xl shadow-lg w-full h-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0d9488/ffffff?text=Trading';">
+                        <img src="images/trading.png" alt="Grafico di trading" class="rounded-xl shadow-lg w-full h-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x400/36D7D9/252B42?text=Trading';">
                     </div>
                 </div>
                  <div class="text-center mt-16">
-                     <a href="#contatti" class="nav-link inline-block bg-teal-600 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:bg-teal-700">Parla con un Esperto</a>
-                </div>
+                     <a href="#contatti" class="nav-link inline-block bg-electric-cyan text-dark-navy px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:opacity-90">Parla con un Esperto</a>
+                 </div>
             </div>
         </div>
 
         <!-- PAGINA GESTIONE FINANZIARIA -->
-        <div id="gestione-finanziaria" class="page bg-white">
+        <div id="gestione-finanziaria" class="page bg-dark-navy">
             <div class="container mx-auto px-6 py-20">
-                <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-4">Gestione Finanziaria Consapevole</h1>
-                <p class="text-xl text-gray-600 mb-12 max-w-4xl">Un partner indipendente per l'ottimizzazione finanziaria di privati e PMI. Creiamo strategie chiare per un futuro solido.</p>
+                <h1 class="text-4xl md:text-5xl font-bold text-electric-cyan mb-4">Gestione Finanziaria Consapevole</h1>
+                <p class="text-xl text-slate-gray mb-12 max-w-4xl">Un partner indipendente per l'ottimizzazione finanziaria di privati e PMI. Creiamo strategie chiare per un futuro solido.</p>
                 
                 <div class="space-y-16">
                     <!-- Per Privati -->
                     <div class="grid md:grid-cols-2 gap-12 items-center">
                         <div class="order-2 md:order-1">
-                            <h2 class="text-3xl font-bold mb-6 border-l-4 border-teal-500 pl-4">Per Privati</h2>
-                            <p class="text-gray-700 text-lg mb-4">Analizziamo la tua situazione finanziaria per ottimizzare le spese, creare riserve di liquidità e costruire un piano di investimento personalizzato e indipendente, libero da conflitti di interesse.</p>
-                            <ul class="space-y-2 text-gray-700 list-disc list-inside">
+                            <h2 class="text-3xl font-bold mb-6 border-l-4 border-aqua-mint pl-4">Per Privati</h2>
+                            <p class="text-slate-gray text-lg mb-4">Analizziamo la tua situazione finanziaria per ottimizzare le spese, creare riserve di liquidità e costruire un piano di investimento personalizzato e indipendente, libero da conflitti di interesse.</p>
+                            <ul class="space-y-2 text-slate-gray list-disc list-inside">
                                 <li>Analisi del bilancio familiare</li>
                                 <li>Pianificazione del risparmio</li>
                                 <li>Creazione di portafogli di investimento efficienti</li>
                             </ul>
                         </div>
                         <div class="order-1 md:order-2">
-                             <img src="images/privati.png" alt="Pianificazione finanziaria" class="rounded-xl shadow-lg w-full h-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x400/14b8a6/ffffff?text=Finanza';">
+                             <img src="images/privati.png" alt="Pianificazione finanziaria" class="rounded-xl shadow-lg w-full h-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x400/66D9B8/252B42?text=Finanza';">
                         </div>
                     </div>
                     <!-- Per PMI -->
                     <div class="grid md:grid-cols-2 gap-12 items-center">
                         <div>
-                             <img src="images/pmi.png" alt="Crescita aziendale" class="rounded-xl shadow-lg w-full h-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0f766e/ffffff?text=PMI';">
+                             <img src="images/pmi.png" alt="Crescita aziendale" class="rounded-xl shadow-lg w-full h-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x400/B8E986/252B42?text=PMI';">
                         </div>
                         <div>
-                            <h2 class="text-3xl font-bold mb-6 border-l-4 border-teal-500 pl-4">Per PMI</h2>
-                            <p class="text-gray-700 text-lg mb-4">Aiutiamo la tua impresa a liberare risorse interne. Attraverso un'analisi dei flussi di cassa e dei costi operativi, identifichiamo aree di inefficienza e creiamo strategie per recuperare fondi da reinvestire nella crescita.</p>
-                             <ul class="space-y-2 text-gray-700 list-disc list-inside">
+                            <h2 class="text-3xl font-bold mb-6 border-l-4 border-lime-green pl-4">Per PMI</h2>
+                            <p class="text-slate-gray text-lg mb-4">Aiutiamo la tua impresa a liberare risorse interne. Attraverso un'analisi dei flussi di cassa e dei costi operativi, identifichiamo aree di inefficienza e creiamo strategie per recuperare fondi da reinvestire nella crescita.</p>
+                             <ul class="space-y-2 text-slate-gray list-disc list-inside">
                                 <li>Ottimizzazione dei flussi di cassa (cash flow)</li>
                                 <li>Analisi e riduzione dei costi superflui</li>
                                 <li>Pianificazione finanziaria strategica per la crescita</li>
-                            </ul>
+                             </ul>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Ottimizzatore di Budget AI -->
-                <div class="mt-20 pt-16 border-t">
+                <div class="mt-20 pt-16 border-t border-slate-gray/20">
                     <div class="max-w-3xl mx-auto text-center">
-                        <h2 class="text-3xl font-bold text-gray-900">✨ Ottimizzatore di Budget AI</h2>
-                        <p class="mt-4 text-lg text-gray-600">Inserisci le tue entrate e uscite mensili. La nostra AI ti fornirà 3 suggerimenti pratici per migliorare la tua gestione finanziaria.</p>
+                        <h2 class="text-3xl font-bold text-text-light">✨ Ottimizzatore di Budget AI</h2>
+                        <p class="mt-4 text-lg text-slate-gray">Inserisci le tue entrate e uscite mensili. La nostra AI ti fornirà 3 suggerimenti pratici per migliorare la tua gestione finanziaria.</p>
                     </div>
-                    <div class="mt-8 max-w-2xl mx-auto bg-gray-50 p-8 rounded-xl shadow-lg">
-                        <textarea id="budget-input" rows="6" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500" placeholder="Esempio:&#10;Entrate:&#10;- Stipendio: 2000€&#10;&#10;Uscite:&#10;- Affitto: 700€&#10;- Spesa alimentare: 400€&#10;- Trasporti: 150€&#10;- Bollette: 100€&#10;- Svago e ristoranti: 250€"></textarea>
-                        <button id="optimize-budget-btn" class="mt-4 w-full bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-teal-700 transition-all">Ottimizza il mio budget</button>
+                    <div class="mt-8 max-w-2xl mx-auto bg-background-section p-8 rounded-xl shadow-lg">
+                        <textarea id="budget-input" rows="6" class="w-full p-4 bg-dark-navy border border-slate-gray/40 rounded-lg focus:ring-2 focus:ring-electric-cyan text-text-light" placeholder="Esempio:&#10;Entrate:&#10;- Stipendio: 2000€&#10;&#10;Uscite:&#10;- Affitto: 700€&#10;- Spesa alimentare: 400€&#10;- Trasporti: 150€&#10;- Bollette: 100€&#10;- Svago e ristoranti: 250€"></textarea>
+                        <button id="optimize-budget-btn" class="mt-4 w-full bg-electric-cyan text-dark-navy px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition-all">Ottimizza il mio budget</button>
                         <div id="budget-loader" class="hidden justify-center mt-6"><div class="loader"></div></div>
-                        <div id="budget-error" class="hidden text-center text-red-600 mt-6"></div>
+                        <div id="budget-error" class="hidden text-center text-red-400 mt-6"></div>
                         <div id="budget-results" class="mt-6 space-y-4"></div>
                     </div>
                 </div>
 
                 <div class="text-center mt-16">
-                     <a href="#contatti" class="nav-link inline-block bg-teal-600 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:bg-teal-700">Richiedi la tua Analisi Finanziaria Completa</a>
+                     <a href="#contatti" class="nav-link inline-block bg-electric-cyan text-dark-navy px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:opacity-90">Richiedi la tua Analisi Finanziaria Completa</a>
                 </div>
             </div>
         </div>
 
         <!-- PAGINA STRUMENTI AI -->
-        <div id="strumenti-ai" class="page bg-white">
+        <div id="strumenti-ai" class="page bg-dark-navy">
             <div class="container mx-auto px-6 py-20">
-                <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-4">Soluzioni AI e Digitali per PMI</h1>
-                <p class="text-xl text-gray-600 mb-12 max-w-4xl">Rendi la tua impresa più intelligente, veloce ed efficiente con strumenti digitali e automazioni su misura.</p>
+                <h1 class="text-4xl md:text-5xl font-bold text-electric-cyan mb-4">Soluzioni AI e Digitali per PMI</h1>
+                <p class="text-xl text-slate-gray mb-12 max-w-4xl">Rendi la tua impresa più intelligente, veloce ed efficiente con strumenti digitali e automazioni su misura.</p>
                 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-gray-50 p-6 rounded-lg">
-                        <h3 class="font-semibold text-xl mb-2">Bot Telegram Personalizzati</h3>
-                        <p class="text-gray-600">Creiamo bot per automatizzare il customer service, inviare notifiche, gestire community o integrare servizi esterni direttamente su Telegram.</p>
+                    <div class="bg-background-section p-6 rounded-lg">
+                        <h3 class="font-semibold text-xl mb-2 text-text-light">Bot Telegram Personalizzati</h3>
+                        <p class="text-slate-gray">Creiamo bot per automatizzare il customer service, inviare notifiche, gestire community o integrare servizi esterni direttamente su Telegram.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-lg">
-                        <h3 class="font-semibold text-xl mb-2">Sistemi di Prenotazione</h3>
-                        <p class="text-gray-600">Sviluppiamo sistemi di booking online semplici e intuitivi per professionisti e attività, integrabili con calendari e pagamenti.</p>
+                    <div class="bg-background-section p-6 rounded-lg">
+                        <h3 class="font-semibold text-xl mb-2 text-text-light">Sistemi di Prenotazione</h3>
+                        <p class="text-slate-gray">Sviluppiamo sistemi di booking online semplici e intuitivi per professionisti e attività, integrabili con calendari e pagamenti.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-lg">
-                        <h3 class="font-semibold text-xl mb-2">Automazioni (Make.com)</h3>
-                        <p class="text-gray-600">Colleghiamo le tue app e i tuoi servizi preferiti, creando flussi di lavoro automatici che ti fanno risparmiare tempo e riducono gli errori.</p>
+                    <div class="bg-background-section p-6 rounded-lg">
+                        <h3 class="font-semibold text-xl mb-2 text-text-light">Automazioni (Make.com)</h3>
+                        <p class="text-slate-gray">Colleghiamo le tue app e i tuoi servizi preferiti, creando flussi di lavoro automatici che ti fanno risparmiare tempo e riducono gli errori.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-lg">
-                        <h3 class="font-semibold text-xl mb-2">Dashboard Dati su Misura</h3>
-                        <p class="text-gray-600">Trasformiamo i tuoi dati in dashboard interattive e di facile lettura per monitorare le performance e prendere decisioni migliori.</p>
+                    <div class="bg-background-section p-6 rounded-lg">
+                        <h3 class="font-semibold text-xl mb-2 text-text-light">Dashboard Dati su Misura</h3>
+                        <p class="text-slate-gray">Trasformiamo i tuoi dati in dashboard interattive e di facile lettura per monitorare le performance e prendere decisioni migliori.</p>
                     </div>
-                     <div class="bg-gray-50 p-6 rounded-lg">
-                        <h3 class="font-semibold text-xl mb-2">Reportistica Automatica</h3>
-                        <p class="text-gray-600">Genera report periodici (giornalieri, settimanali, mensili) in modo automatico, risparmiando ore di lavoro manuale.</p>
+                     <div class="bg-background-section p-6 rounded-lg">
+                        <h3 class="font-semibold text-xl mb-2 text-text-light">Reportistica Automatica</h3>
+                        <p class="text-slate-gray">Genera report periodici (giornalieri, settimanali, mensili) in modo automatico, risparmiando ore di lavoro manuale.</p>
                     </div>
-                     <div class="bg-gray-50 p-6 rounded-lg">
-                        <h3 class="font-semibold text-xl mb-2">Consulenza Digitale</h3>
-                        <p class="text-gray-600">Analizziamo i tuoi processi e ti guidiamo nella scelta e nell'implementazione degli strumenti digitali più adatti a te.</p>
+                     <div class="bg-background-section p-6 rounded-lg">
+                        <h3 class="font-semibold text-xl mb-2 text-text-light">Consulenza Digitale</h3>
+                        <p class="text-slate-gray">Analizziamo i tuoi processi e ti guidiamo nella scelta e nell'implementazione degli strumenti digitali più adatti a te.</p>
                     </div>
                 </div>
 
                 <!-- Generatore di Soluzioni AI -->
-                 <div class="mt-20 pt-16 border-t">
+                 <div class="mt-20 pt-16 border-t border-slate-gray/20">
                     <div class="max-w-3xl mx-auto text-center">
-                        <h2 class="text-3xl font-bold text-gray-900">✨ Generatore di Soluzioni AI</h2>
-                        <p class="mt-4 text-lg text-gray-600">Descrivi un problema o un'inefficienza nella tua attività. La nostra AI ti suggerirà uno strumento o un'automazione per risolverlo.</p>
+                        <h2 class="text-3xl font-bold text-text-light">✨ Generatore di Soluzioni AI</h2>
+                        <p class="mt-4 text-lg text-slate-gray">Descrivi un problema o un'inefficienza nella tua attività. La nostra AI ti suggerirà uno strumento o un'automazione per risolverlo.</p>
                     </div>
-                    <div class="mt-8 max-w-2xl mx-auto bg-gray-50 p-8 rounded-xl shadow-lg">
-                        <input type="text" id="pmi-problem-input" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500" placeholder="Esempio: 'Passo ore a gestire gli appuntamenti via email'...">
-                        <button id="solve-pmi-problem-btn" class="mt-4 w-full bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-teal-700 transition-all">Trova una soluzione AI</button>
+                    <div class="mt-8 max-w-2xl mx-auto bg-background-section p-8 rounded-xl shadow-lg">
+                        <input type="text" id="pmi-problem-input" class="w-full p-4 bg-dark-navy border border-slate-gray/40 rounded-lg focus:ring-2 focus:ring-electric-cyan text-text-light" placeholder="Esempio: 'Passo ore a gestire gli appuntamenti via email'...">
+                        <button id="solve-pmi-problem-btn" class="mt-4 w-full bg-electric-cyan text-dark-navy px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition-all">Trova una soluzione AI</button>
                         <div id="pmi-loader" class="hidden justify-center mt-6"><div class="loader"></div></div>
-                        <div id="pmi-error" class="hidden text-center text-red-600 mt-6"></div>
+                        <div id="pmi-error" class="hidden text-center text-red-400 mt-6"></div>
                         <div id="pmi-results" class="mt-6"></div>
                     </div>
                 </div>
 
                  <div class="text-center mt-16">
-                     <a href="#contatti" class="nav-link inline-block bg-teal-600 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:bg-teal-700">Trasforma la tua Impresa</a>
-                </div>
+                     <a href="#contatti" class="nav-link inline-block bg-electric-cyan text-dark-navy px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:opacity-90">Trasforma la tua Impresa</a>
+                 </div>
             </div>
         </div>
 
         <!-- PAGINA FORMAZIONE PER PROFESSIONISTI -->
-        <div id="formazione-pro" class="page bg-white">
+        <div id="formazione-pro" class="page bg-dark-navy">
             <div class="container mx-auto px-6 py-20">
-                <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-4">Formazione per Professionisti e Agenzie</h1>
-                <p class="text-xl text-gray-600 mb-12 max-w-4xl">Impara a costruire e integrare soluzioni AI per i tuoi clienti. Trasforma la tua offerta di servizi e posizionati come un leader dell'innovazione digitale.</p>
+                <h1 class="text-4xl md:text-5xl font-bold text-electric-cyan mb-4">Formazione per Professionisti e Agenzie</h1>
+                <p class="text-xl text-slate-gray mb-12 max-w-4xl">Impara a costruire e integrare soluzioni AI per i tuoi clienti. Trasforma la tua offerta di servizi e posizionati come un leader dell'innovazione digitale.</p>
                 
-                <div class="bg-gray-50 p-8 md:p-12 rounded-lg shadow-inner">
-                    <h2 class="text-3xl font-semibold mb-6 text-center">Programma del Corso: "AI Integrator"</h2>
+                <div class="bg-background-section p-8 md:p-12 rounded-lg shadow-inner">
+                    <h2 class="text-3xl font-semibold mb-6 text-center text-text-light">Programma del Corso: "AI Integrator"</h2>
                     <div class="grid md:grid-cols-2 gap-x-12 gap-y-8">
                         <div>
-                            <h3 class="font-bold text-lg mb-2">Modulo 1: Fondamentali delle API e Webhook</h3>
-                            <p class="text-gray-600">Comprendi le basi della comunicazione tra applicazioni, impara a usare le API di Gemini e a gestire i webhook per creare sistemi reattivi.</p>
+                            <h3 class="font-bold text-lg mb-2 text-aqua-mint">Modulo 1: Fondamentali delle API e Webhook</h3>
+                            <p class="text-slate-gray">Comprendi le basi della comunicazione tra applicazioni, impara a usare le API di Gemini e a gestire i webhook per creare sistemi reattivi.</p>
                         </div>
                         <div>
-                            <h3 class="font-bold text-lg mb-2">Modulo 2: Automazione Low-Code con Make.com</h3>
-                            <p class="text-gray-600">Costruisci potenti bot per WhatsApp e Telegram senza scrivere una riga di codice. Impara a integrare l'AI nei tuoi scenari di automazione.</p>
+                            <h3 class="font-bold text-lg mb-2 text-aqua-mint">Modulo 2: Automazione Low-Code con Make.com</h3>
+                            <p class="text-slate-gray">Costruisci potenti bot per WhatsApp e Telegram senza scrivere una riga di codice. Impara a integrare l'AI nei tuoi scenari di automazione.</p>
                         </div>
                         <div>
-                            <h3 class="font-bold text-lg mb-2">Modulo 3: Sviluppo Backend (Node.js)</h3>
-                            <p class="text-gray-600">Per chi vuole il massimo controllo: impara a creare un server personalizzato per gestire logiche complesse e dare "memoria" ai tuoi assistenti AI.</p>
+                            <h3 class="font-bold text-lg mb-2 text-aqua-mint">Modulo 3: Sviluppo Backend (Node.js)</h3>
+                            <p class="text-slate-gray">Per chi vuole il massimo controllo: impara a creare un server personalizzato per gestire logiche complesse e dare "memoria" ai tuoi assistenti AI.</p>
                         </div>
                         <div>
-                            <h3 class="font-bold text-lg mb-2">Modulo 4: L'Arte del Prompting Avanzato</h3>
-                            <p class="text-gray-600">Scopri le tecniche per scrivere prompt efficaci, definire la personalità del tuo bot e gestire conversazioni complesse in modo professionale.</p>
+                            <h3 class="font-bold text-lg mb-2 text-aqua-mint">Modulo 4: L'Arte del Prompting Avanzato</h3>
+                            <p class="text-slate-gray">Scopri le tecniche per scrivere prompt efficaci, definire la personalità del tuo bot e gestire conversazioni complesse in modo professionale.</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="mt-12 text-center">
-                    <h3 class="text-2xl font-semibold mb-4">A Chi Si Rivolge</h3>
-                    <div class="flex flex-wrap justify-center gap-4 text-gray-700">
-                        <span class="bg-teal-100 text-teal-800 px-4 py-1 rounded-full">Freelancer</span>
-                        <span class="bg-teal-100 text-teal-800 px-4 py-1 rounded-full">Agenzie di Marketing</span>
-                        <span class="bg-teal-100 text-teal-800 px-4 py-1 rounded-full">Sviluppatori</span>
-                        <span class="bg-teal-100 text-teal-800 px-4 py-1 rounded-full">Imprenditori Digitali</span>
+                    <h3 class="text-2xl font-semibold mb-4 text-text-light">A Chi Si Rivolge</h3>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <span class="bg-electric-cyan/10 text-electric-cyan px-4 py-1 rounded-full">Freelancer</span>
+                        <span class="bg-electric-cyan/10 text-electric-cyan px-4 py-1 rounded-full">Agenzie di Marketing</span>
+                        <span class="bg-electric-cyan/10 text-electric-cyan px-4 py-1 rounded-full">Sviluppatori</span>
+                        <span class="bg-electric-cyan/10 text-electric-cyan px-4 py-1 rounded-full">Imprenditori Digitali</span>
                     </div>
                 </div>
 
                  <div class="text-center mt-16">
-                     <a href="#contatti" class="nav-link inline-block bg-teal-600 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:bg-teal-700">Richiedi Info sul Corso</a>
-                </div>
+                     <a href="#contatti" class="nav-link inline-block bg-electric-cyan text-dark-navy px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:opacity-90">Richiedi Info sul Corso</a>
+                 </div>
             </div>
         </div>
 
         <!-- PAGINA CHI SIAMO -->
-        <div id="chi-siamo" class="page bg-white">
+        <div id="chi-siamo" class="page bg-dark-navy">
             <div class="container mx-auto px-6 py-20">
                 <div class="max-w-4xl mx-auto">
-                    <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-8 text-center">La Nostra Filosofia</h1>
-                    <p class="text-xl text-center text-gray-600 mb-12">Crediamo in un approccio al business e alla finanza che sia etico, trasparente e profondamente umano. Il nostro obiettivo non è solo fornire servizi, ma creare valore reale e duraturo per i nostri clienti.</p>
+                    <h1 class="text-4xl md:text-5xl font-bold text-electric-cyan mb-8 text-center">La Nostra Filosofia</h1>
+                    <p class="text-xl text-center text-slate-gray mb-12">Crediamo in un approccio al business e alla finanza che sia etico, trasparente e profondamente umano. Il nostro obiettivo non è solo fornire servizi, ma creare valore reale e duraturo per i nostri clienti.</p>
                     
                     <div class="grid md:grid-cols-3 gap-8 text-center mb-16">
                         <div>
-                            <h3 class="font-semibold text-xl mb-2">Precisione</h3>
-                            <p class="text-gray-600">Ogni nostra analisi e strategia si basa su dati oggettivi e metodi rigorosi.</p>
+                            <h3 class="font-semibold text-xl mb-2 text-aqua-mint">Precisione</h3>
+                            <p class="text-slate-gray">Ogni nostra analisi e strategia si basa su dati oggettivi e metodi rigorosi.</p>
                         </div>
                         <div>
-                            <h3 class="font-semibold text-xl mb-2">Trasparenza</h3>
-                            <p class="text-gray-600">Comunichiamo in modo chiaro e onesto, senza costi nascosti o conflitti di interesse.</p>
+                            <h3 class="font-semibold text-xl mb-2 text-aqua-mint">Trasparenza</h3>
+                            <p class="text-slate-gray">Comunichiamo in modo chiaro e onesto, senza costi nascosti o conflitti di interesse.</p>
                         </div>
                         <div>
-                            <h3 class="font-semibold text-xl mb-2">Indipendenza</h3>
-                            <p class="text-gray-600">La nostra consulenza è sempre e solo nel tuo interesse. Non vendiamo prodotti finanziari.</p>
+                            <h3 class="font-semibold text-xl mb-2 text-aqua-mint">Indipendenza</h3>
+                            <p class="text-slate-gray">La nostra consulenza è sempre e solo nel tuo interesse. Non vendiamo prodotti finanziari.</p>
                         </div>
                     </div>
 
-                    <div class="bg-gray-50 p-8 md:p-12 rounded-lg text-center">
-                         <h2 class="text-3xl font-bold mb-4">Il Fondatore</h2>
-                         <img src="images/fondatore.jpg" alt="Foto del fondatore" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e2e8f0/334155?text=Foto';">
-                         <p class="text-gray-700 text-lg">"Dopo anni di esperienza nei mercati finanziari e nello sviluppo tecnologico, ho fondato TapeDynamics con una visione chiara: portare un livello di precisione e etica professionale superiore in settori spesso opachi. Il mio impegno è guidare ogni cliente verso i propri obiettivi con gli strumenti e la conoscenza migliori."</p>
-                         <p class="font-semibold mt-4">Daniele - Fondatore di TapeDynamics</p>
+                    <div class="bg-background-section p-8 md:p-12 rounded-lg text-center">
+                         <h2 class="text-3xl font-bold mb-4 text-text-light">Il Fondatore</h2>
+                         <img src="images/fondatore.jpg" alt="Foto del fondatore" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-dark-navy shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/128x128/2c3350/F4F4F4?text=Foto';">
+                         <p class="text-slate-gray text-lg">"Dopo anni di esperienza nei mercati finanziari e nello sviluppo tecnologico, ho fondato TapeDynamics con una visione chiara: portare un livello di precisione e etica professionale superiore in settori spesso opachi. Il mio impegno è guidare ogni cliente verso i propri obiettivi con gli strumenti e la conoscenza migliori."</p>
+                         <p class="font-semibold mt-4 text-text-light">Daniele - Fondatore di TapeDynamics</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- PAGINA CONTATTI -->
-        <div id="contatti" class="page bg-white">
+        <div id="contatti" class="page bg-dark-navy">
             <div class="container mx-auto px-6 py-20">
                 <div class="max-w-3xl mx-auto text-center">
-                    <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-4">Mettiamoci in Contatto</h1>
-                    <p class="text-xl text-gray-600 mb-12">Hai un'idea, un progetto o semplicemente vuoi saperne di più? Sono a tua disposizione. Scegli il canale che preferisci.</p>
+                    <h1 class="text-4xl md:text-5xl font-bold text-electric-cyan mb-4">Mettiamoci in Contatto</h1>
+                    <p class="text-xl text-slate-gray mb-12">Hai un'idea, un progetto o semplicemente vuoi saperne di più? Sono a tua disposizione. Scegli il canale che preferisci.</p>
                 </div>
-                <div class="max-w-lg mx-auto bg-gray-50 p-8 rounded-xl shadow-lg space-y-6">
-                    <a href="mailto:tapedynamics8283@gmail.com" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-200 transition-colors">
-                        <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                <div class="max-w-lg mx-auto bg-background-section p-8 rounded-xl shadow-lg space-y-6">
+                    <a href="mailto:tapedynamics8283@gmail.com" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-dark-navy transition-colors">
+                        <svg class="w-8 h-8 text-electric-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                         <div>
-                            <h3 class="font-semibold text-lg">Email</h3>
-                            <p class="text-gray-600">tapedynamics8283@gmail.com</p>
+                            <h3 class="font-semibold text-lg text-text-light">Email</h3>
+                            <p class="text-slate-gray">tapedynamics8283@gmail.com</p>
                         </div>
                     </a>
-                    <a href="https://wa.me/34613626253" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-200 transition-colors">
-                        <svg class="w-8 h-8 text-teal-600" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.269.655 4.512 1.924 6.344l-1.226 4.485 4.575-1.196zM12 5.999c-3.316 0-6.002 2.686-6.002 6.001 0 1.573.628 3.012 1.652 4.068l-.356 1.297 1.34-.348c.972.55 2.05.873 3.16.874 3.316 0 6.001-2.686 6.001-6.001s-2.685-6.001-6.001-6.001zm0 1.5c2.489 0 4.501 2.012 4.501 4.501s-2.012 4.501-4.501 4.501-4.501-2.012-4.501-4.501 2.012-4.501 4.501-4.501z"/></svg>
+                    <a href="https://wa.me/34613626253" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-dark-navy transition-colors">
+                        <svg class="w-8 h-8 text-electric-cyan" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.269.655 4.512 1.924 6.344l-1.226 4.485 4.575-1.196zM12 5.999c-3.316 0-6.002 2.686-6.002 6.001 0 1.573.628 3.012 1.652 4.068l-.356 1.297 1.34-.348c.972.55 2.05.873 3.16.874 3.316 0 6.001-2.686 6.001-6.001s-2.685-6.001-6.001-6.001zm0 1.5c2.489 0 4.501 2.012 4.501 4.501s-2.012 4.501-4.501 4.501-4.501-2.012-4.501-4.501 2.012-4.501 4.501-4.501z"/></svg>
                         <div>
-                            <h3 class="font-semibold text-lg">WhatsApp & Telefono</h3>
-                            <p class="text-gray-600">+34 613 62 62 53</p>
+                            <h3 class="font-semibold text-lg text-text-light">WhatsApp & Telefono</h3>
+                            <p class="text-slate-gray">+34 613 62 62 53</p>
                         </div>
                     </a>
-                     <!-- MODIFICA QUI IL LINK CALENDLY -->
-                     <a href="https://calendly.com/siusky-dc/30min" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-200 transition-colors">
-                        <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                     <a href="https://calendly.com/siusky-dc/30min" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-dark-navy transition-colors">
+                        <svg class="w-8 h-8 text-electric-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         <div>
-                            <h3 class="font-semibold text-lg">Prenota una Chiamata</h3>
-                            <p class="text-gray-600">Fissa direttamente un appuntamento sul mio calendario.</p>
+                            <h3 class="font-semibold text-lg text-text-light">Prenota una Chiamata</h3>
+                            <p class="text-slate-gray">Fissa direttamente un appuntamento sul mio calendario.</p>
                         </div>
                     </a>
                 </div>
@@ -394,10 +428,10 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white">
+    <footer class="bg-dark-navy border-t border-slate-gray/20">
         <div class="container mx-auto px-6 py-8 text-center">
-            <p>&copy; 2025 TapeDynamics 8283 S.L. Tutti i diritti riservati.</p>
-            <p class="text-sm text-gray-400 mt-2">P.IVA B75723858 - Spagna</p>
+            <p class="text-slate-gray">&copy; 2025 TapeDynamics 8283 S.L. Tutti i diritti riservati.</p>
+            <p class="text-sm text-slate-gray/70 mt-2">P.IVA B75723858 - Spagna</p>
         </div>
     </footer>
 
@@ -453,6 +487,8 @@
 
             // --- LOGICA API GEMINI ---
             
+            // NOTA: La logica per la chiamata a Gemini è stata mantenuta identica
+            // ma ora interagisce con gli elementi ridisegnati.
             async function callGemini(prompt, schema) {
                 const payload = {
                     contents: [{ role: "user", parts: [{ text: prompt }] }],
@@ -464,17 +500,20 @@
                     };
                 }
                 
-                // La funzione Netlify ora riceve sia il prompt che lo schema
-                const response = await fetch('/.netlify/functions/gemini', {
+                const apiKey = "" // Lasciare vuoto
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt, schema })
+                    body: JSON.stringify(payload)
                 });
 
                 const result = await response.json();
 
                 if (!response.ok) {
-                    throw new Error(result.error || 'Errore sconosciuto dal server.');
+                    const errorMsg = result?.error?.message || 'Errore sconosciuto dal server.';
+                    throw new Error(errorMsg);
                 }
                 
                 if (result.candidates && result.candidates.length > 0) {
@@ -528,8 +567,8 @@
                         
                         result.suggerimenti.forEach(suggerimento => {
                             const card = document.createElement('div');
-                            card.className = 'bg-white p-4 rounded-lg border';
-                            card.innerHTML = `<h4 class="font-semibold text-teal-700">${suggerimento.titolo}</h4><p class="text-gray-600">${suggerimento.descrizione}</p>`;
+                            card.className = 'bg-dark-navy p-4 rounded-lg border border-slate-gray/30';
+                            card.innerHTML = `<h4 class="font-semibold text-aqua-mint">${suggerimento.titolo}</h4><p class="text-slate-gray">${suggerimento.descrizione}</p>`;
                             budgetResults.appendChild(card);
                         });
 
@@ -562,13 +601,13 @@
                     pmiResults.innerHTML = '';
                     pmiBtn.disabled = true;
 
-                    const prompt = `Sei un consulente di digitalizzazione per PMI. Un imprenditore descrive questo problema: "${pmiInput.value}". Fornisci una soluzione tecnologica specifica (es. un tipo di software, un'automazione con Make.com, un bot Telegram). Descrivi la soluzione, i suoi vantaggi e i primi passi per implementarla. Sii conciso e pratico.`;
+                    const prompt = `Sei un consulente di digitalizzazione per PMI. Un imprenditore descrive questo problema: "${pmiInput.value}". Fornisci una soluzione tecnologica specifica (es. un tipo di software, un'automazione con Make.com, un bot Telegram). Descrivi la soluzione, i suoi vantaggi e i primi passi per implementarla. Sii conciso e pratico. Formatta la risposta in HTML semplice, usando <h4> per i titoli e <p> per il testo.`;
                     
                     try {
-                        const textResult = await callGemini(prompt, null); // Nessuno schema per risposta libera
+                        const htmlResult = await callGemini(prompt, null); // Nessuno schema per risposta libera
                         const card = document.createElement('div');
-                        card.className = 'bg-white p-6 rounded-lg border';
-                        card.innerHTML = textResult.replace(/\n/g, '<br>');
+                        card.className = 'bg-dark-navy p-6 rounded-lg border border-slate-gray/30 text-left';
+                        card.innerHTML = htmlResult;
                         pmiResults.appendChild(card);
                     } catch (error) {
                         pmiError.textContent = `Si è verificato un errore: ${error.message}`;
