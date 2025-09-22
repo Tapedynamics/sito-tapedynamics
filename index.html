@@ -208,8 +208,71 @@
                             <p class="text-slate-gray">Offriamo percorsi personalizzati in base al tuo livello di esperienza, attraverso consulenze one-to-one, corsi online on-demand e sessioni di affiancamento live.</p>
                         </div>
                     </div>
-                    <div>
-                        <img src="images/trading.png" alt="Grafico di trading" class="rounded-xl shadow-lg w-full h-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x400/36D7D9/252B42?text=Trading';">
+                    <div class="relative">
+                        <!-- Trading Dashboard Mock-up -->
+                        <div class="bg-dark-navy rounded-xl p-6 border border-electric-cyan/20 shadow-2xl">
+                            <!-- Header del Dashboard -->
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-lg font-semibold text-text-light">Live Trading Dashboard</h3>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-2 h-2 bg-lime-green rounded-full animate-pulse"></div>
+                                    <span class="text-lime-green text-sm">LIVE</span>
+                                </div>
+                            </div>
+
+                            <!-- Metriche Principali -->
+                            <div class="grid grid-cols-3 gap-4 mb-6">
+                                <div class="bg-background-section p-3 rounded-lg text-center">
+                                    <div class="text-lime-green text-xl font-bold">+2.7%</div>
+                                    <div class="text-slate-gray text-xs">NQ100</div>
+                                </div>
+                                <div class="bg-background-section p-3 rounded-lg text-center">
+                                    <div class="text-aqua-mint text-xl font-bold">+1.2%</div>
+                                    <div class="text-slate-gray text-xs">ES</div>
+                                </div>
+                                <div class="bg-background-section p-3 rounded-lg text-center">
+                                    <div class="text-electric-cyan text-xl font-bold">92%</div>
+                                    <div class="text-slate-gray text-xs">Win Rate</div>
+                                </div>
+                            </div>
+
+                            <!-- Grafico Simulato -->
+                            <div class="relative h-32 bg-background-section rounded-lg p-4 mb-4">
+                                <div class="absolute inset-4">
+                                    <!-- Linea del grafico SVG -->
+                                    <svg class="w-full h-full" viewBox="0 0 300 80">
+                                        <defs>
+                                            <linearGradient id="tradingGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                                <stop offset="0%" style="stop-color:#36D7D9;stop-opacity:0.3"/>
+                                                <stop offset="100%" style="stop-color:#36D7D9;stop-opacity:0"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <path d="M0,60 Q75,40 150,35 T300,25" stroke="#36D7D9" stroke-width="2" fill="none"/>
+                                        <path d="M0,60 Q75,40 150,35 T300,25 L300,80 L0,80 Z" fill="url(#tradingGradient)"/>
+                                        <!-- Punti di interesse -->
+                                        <circle cx="150" cy="35" r="3" fill="#66D9B8"/>
+                                        <circle cx="225" cy="30" r="3" fill="#B8E986"/>
+                                    </svg>
+                                </div>
+                                <div class="absolute top-2 right-2 text-lime-green text-xs">📈 +$1,247</div>
+                            </div>
+
+                            <!-- Setup ICT -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center p-2 bg-background-section rounded">
+                                    <span class="text-text-light text-sm">Propulsion Block</span>
+                                    <span class="text-lime-green text-sm">✓ Active</span>
+                                </div>
+                                <div class="flex justify-between items-center p-2 bg-background-section rounded">
+                                    <span class="text-text-light text-sm">Fair Value Gap</span>
+                                    <span class="text-aqua-mint text-sm">⚡ Setup</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Elementi decorativi -->
+                        <div class="absolute -top-3 -right-3 w-6 h-6 bg-electric-cyan rounded-full opacity-60"></div>
+                        <div class="absolute -bottom-3 -left-3 w-4 h-4 bg-lime-green rounded-full opacity-40"></div>
                     </div>
                 </div>
                  <div class="text-center mt-16">
