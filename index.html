@@ -303,20 +303,6 @@
                     </div>
                 </div>
 
-                <!-- Generatore di Soluzioni AI -->
-                 <div class="mt-20 pt-16 border-t border-slate-gray/20">
-                    <div class="max-w-3xl mx-auto text-center">
-                        <h2 class="text-3xl font-bold text-text-light">✨ Generatore di Soluzioni AI</h2>
-                        <p class="mt-4 text-lg text-slate-gray">Descrivi un problema o un'inefficienza nella tua attività. La nostra AI ti suggerirà uno strumento o un'automazione per risolverlo.</p>
-                    </div>
-                    <div class="mt-8 max-w-2xl mx-auto bg-background-section p-8 rounded-xl shadow-lg">
-                        <input type="text" id="pmi-problem-input" class="w-full p-4 bg-dark-navy border border-slate-gray/40 rounded-lg focus:ring-2 focus:ring-electric-cyan text-text-light" placeholder="Esempio: 'Passo ore a gestire gli appuntamenti via email'...">
-                        <button id="solve-pmi-problem-btn" class="mt-4 w-full bg-electric-cyan text-dark-navy px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition-all">Trova una soluzione AI</button>
-                        <div id="pmi-loader" class="hidden justify-center mt-6"><div class="loader"></div></div>
-                        <div id="pmi-error" class="hidden text-center text-red-400 mt-6"></div>
-                        <div id="pmi-results" class="mt-6"></div>
-                    </div>
-                </div>
 
                  <div class="text-center mt-16">
                      <a href="#contatti" class="nav-link inline-block bg-electric-cyan text-dark-navy px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:opacity-90">Trasforma la tua Impresa</a>
@@ -656,42 +642,6 @@
                 });
             }
 
-            // 2. Generatore di Soluzioni PMI
-            const pmiBtn = document.getElementById('solve-pmi-problem-btn');
-            if (pmiBtn) {
-                const pmiInput = document.getElementById('pmi-problem-input');
-                const pmiLoader = document.getElementById('pmi-loader');
-                const pmiError = document.getElementById('pmi-error');
-                const pmiResults = document.getElementById('pmi-results');
-
-                pmiBtn.addEventListener('click', async () => {
-                     if (!pmiInput.value.trim()) {
-                        pmiError.textContent = 'Per favore, descrivi un problema.';
-                        pmiError.style.display = 'block';
-                        return;
-                    }
-                    pmiLoader.style.display = 'flex';
-                    pmiError.style.display = 'none';
-                    pmiResults.innerHTML = '';
-                    pmiBtn.disabled = true;
-
-                    const prompt = `Sei un consulente di digitalizzazione per PMI. Un imprenditore descrive questo problema: "${pmiInput.value}". Fornisci una soluzione tecnologica specifica (es. un tipo di software, un'automazione con Make.com, un bot Telegram). Descrivi la soluzione, i suoi vantaggi e i primi passi per implementarla. Sii conciso e pratico. Formatta la risposta in HTML semplice, usando <h4> per i titoli e <p> per il testo.`;
-                    
-                    try {
-                        const htmlResult = await callGemini(prompt, null); // Nessuno schema per risposta libera
-                        const card = document.createElement('div');
-                        card.className = 'bg-dark-navy p-6 rounded-lg border border-slate-gray/30 text-left';
-                        card.innerHTML = htmlResult;
-                        pmiResults.appendChild(card);
-                    } catch (error) {
-                        pmiError.textContent = `Si è verificato un errore: ${error.message}`;
-                        pmiError.style.display = 'block';
-                    } finally {
-                        pmiLoader.style.display = 'none';
-                        pmiBtn.disabled = false;
-                    }
-                });
-            }
         });
     </script>
 
