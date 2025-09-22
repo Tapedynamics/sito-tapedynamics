@@ -249,20 +249,6 @@
                     </div>
                 </div>
                 
-                <!-- Ottimizzatore di Budget AI -->
-                <div class="mt-20 pt-16 border-t border-slate-gray/20">
-                    <div class="max-w-3xl mx-auto text-center">
-                        <h2 class="text-3xl font-bold text-text-light">✨ Ottimizzatore di Budget AI</h2>
-                        <p class="mt-4 text-lg text-slate-gray">Inserisci le tue entrate e uscite mensili. La nostra AI ti fornirà 3 suggerimenti pratici per migliorare la tua gestione finanziaria.</p>
-                    </div>
-                    <div class="mt-8 max-w-2xl mx-auto bg-background-section p-8 rounded-xl shadow-lg">
-                        <textarea id="budget-input" rows="6" class="w-full p-4 bg-dark-navy border border-slate-gray/40 rounded-lg focus:ring-2 focus:ring-electric-cyan text-text-light" placeholder="Esempio:&#10;Entrate:&#10;- Stipendio: 2000€&#10;&#10;Uscite:&#10;- Affitto: 700€&#10;- Spesa alimentare: 400€&#10;- Trasporti: 150€&#10;- Bollette: 100€&#10;- Svago e ristoranti: 250€"></textarea>
-                        <button id="optimize-budget-btn" class="mt-4 w-full bg-electric-cyan text-dark-navy px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition-all">Ottimizza il mio budget</button>
-                        <div id="budget-loader" class="hidden justify-center mt-6"><div class="loader"></div></div>
-                        <div id="budget-error" class="hidden text-center text-red-400 mt-6"></div>
-                        <div id="budget-results" class="mt-6 space-y-4"></div>
-                    </div>
-                </div>
 
                 <div class="text-center mt-16">
                      <a href="#contatti" class="nav-link inline-block bg-electric-cyan text-dark-navy px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:opacity-90">Richiedi la tua Analisi Finanziaria Completa</a>
@@ -583,64 +569,6 @@
                 return result.text;
             }
 
-            // 1. Ottimizzatore di Budget
-            const budgetBtn = document.getElementById('optimize-budget-btn');
-            if (budgetBtn) {
-                const budgetInput = document.getElementById('budget-input');
-                const budgetLoader = document.getElementById('budget-loader');
-                const budgetError = document.getElementById('budget-error');
-                const budgetResults = document.getElementById('budget-results');
-
-                budgetBtn.addEventListener('click', async () => {
-                    if (!budgetInput.value.trim()) {
-                        budgetError.textContent = 'Per favore, inserisci i tuoi dati.';
-                        budgetError.style.display = 'block';
-                        return;
-                    }
-                    budgetLoader.style.display = 'flex';
-                    budgetError.style.display = 'none';
-                    budgetResults.innerHTML = '';
-                    budgetBtn.disabled = true;
-
-                    const prompt = `Sei un consulente finanziario. Analizza le seguenti entrate e uscite mensili di un utente e fornisci esattamente 3 suggerimenti brevi, concreti e incoraggianti per ottimizzare il budget, identificare risparmi o migliorare la gestione. Dati utente: "${budgetInput.value}"`;
-                    const schema = {
-                        type: "OBJECT",
-                        properties: {
-                            suggerimenti: {
-                                type: "ARRAY",
-                                items: {
-                                    type: "OBJECT",
-                                    properties: {
-                                        titolo: { type: "STRING" },
-                                        descrizione: { type: "STRING" }
-                                    },
-                                    required: ["titolo", "descrizione"]
-                                }
-                            }
-                        },
-                        required: ["suggerimenti"]
-                    };
-
-                    try {
-                        const jsonText = await callGemini(prompt, schema);
-                        const result = JSON.parse(jsonText);
-                        
-                        result.suggerimenti.forEach(suggerimento => {
-                            const card = document.createElement('div');
-                            card.className = 'bg-dark-navy p-4 rounded-lg border border-slate-gray/30';
-                            card.innerHTML = `<h4 class="font-semibold text-aqua-mint">${suggerimento.titolo}</h4><p class="text-slate-gray">${suggerimento.descrizione}</p>`;
-                            budgetResults.appendChild(card);
-                        });
-
-                    } catch (error) {
-                        budgetError.textContent = `Si è verificato un errore: ${error.message}`;
-                        budgetError.style.display = 'block';
-                    } finally {
-                        budgetLoader.style.display = 'none';
-                        budgetBtn.disabled = false;
-                    }
-                });
-            }
 
         });
     </script>
